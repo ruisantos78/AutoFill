@@ -9,8 +9,17 @@ using RuiSantos.AutoFill.Domain.Interfaces;
 
 namespace RuiSantos.AutoFill.Application;
 
+/// <summary>
+/// Provides extension methods for the IServiceCollection interface.
+/// </summary>
 public static class ServiceCollectionExtensions
 {
+    /// <summary>
+    /// Registers the AutoFill services in the specified IServiceCollection.
+    /// </summary>
+    /// <param name="services">The IServiceCollection to add the services to.</param>
+    /// <param name="configuration">The IConfiguration instance for configuration settings.</param>
+    /// <returns>The IServiceCollection with the registered services.</returns>
     public static IServiceCollection UseAutoFill(this IServiceCollection services, IConfiguration configuration)
     {
         // Register the field detection service

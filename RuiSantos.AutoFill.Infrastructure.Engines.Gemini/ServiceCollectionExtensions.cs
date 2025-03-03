@@ -1,7 +1,7 @@
 using System.Runtime.CompilerServices;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using RuiSantos.AutoFill.Infrastructure.Engines.Gemini.Core;
+using RuiSantos.AutoFill.Infrastructure.Engines.Gemini.Clients;
 using RuiSantos.AutoFill.Infrastructure.Engines.Gemini.Services;
 using RuiSantos.AutoFill.Infrastructure.Engines.Interfaces;
 
@@ -10,9 +10,17 @@ using RuiSantos.AutoFill.Infrastructure.Engines.Interfaces;
 [assembly: InternalsVisibleTo("RuiSantos.AutoFill.Tests")]
 
 namespace RuiSantos.AutoFill.Infrastructure.Engines.Gemini;
-
+/// <summary>
+/// Provides extension methods for registering the Gemini engine services.
+/// </summary>
 public static class ServiceCollectionExtensions
 {
+    /// <summary>
+    /// Registers the Gemini engine services with the specified <see cref="IServiceCollection"/>.
+    /// </summary>
+    /// <param name="services">The service collection to add the services to.</param>
+    /// <param name="configuration">The configuration to bind the Gemini settings from.</param>
+    /// <returns>The updated service collection.</returns>
     public static IServiceCollection UseGeminiEngine(this IServiceCollection services, IConfiguration configuration)
     {
         services.UseEngine<GeminiClient>();

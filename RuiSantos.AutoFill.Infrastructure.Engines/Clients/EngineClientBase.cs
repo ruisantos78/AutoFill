@@ -4,7 +4,7 @@ using System.Text.Json.Nodes;
 using Microsoft.Extensions.Options;
 using RuiSantos.AutoFill.Infrastructure.Engines.Interfaces;
 
-namespace RuiSantos.AutoFill.Infrastructure.Engines.Core;
+namespace RuiSantos.AutoFill.Infrastructure.Engines.Clients;
 
 public abstract class EngineClientBase<TSettings> : IEngineClient
     where TSettings : EngineSettingsBase

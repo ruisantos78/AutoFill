@@ -14,7 +14,7 @@ public class GenerateTemplateFromDocumentTests(ServiceProviderFixture provider, 
     private IDataContext DataContext => provider.GetService<IDataContext>();
     private readonly ITemplateManagerService _service = provider.GetService<ITemplateManagerService>();
     
-    [Fact]
+    [Fact(DisplayName = "GenerateTemplateFromDocument with valid document should store and return the new template")]
     public async Task GenerateTemplateFromDocument_ValidDocument_GeneratesTemplate()
     {
         // Arrange
@@ -42,7 +42,7 @@ public class GenerateTemplateFromDocumentTests(ServiceProviderFixture provider, 
         Assert.True(record.UpdatedAt >= executionTime);
     }
     
-    [Fact]
+    [Fact(DisplayName = "GenerateTemplateFromDocument with invalid document should throw exception")]
     public async Task GenerateTemplateFromDocument_NoFieldsFound_ThrowsTemplateManagerServiceException()
     {
         // Arrange
