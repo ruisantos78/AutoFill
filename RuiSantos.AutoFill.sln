@@ -30,6 +30,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RuiSantos.AutoFill.Applicat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RuiSantos.AutoFill.Application.Tests", "RuiSantos.AutoFill.Application.Tests\RuiSantos.AutoFill.Application.Tests.csproj", "{3C46EF78-EC4E-4855-9A6B-62A7FABC5423}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RuiSantos.AutoFill.App", "RuiSantos.AutoFill.App\RuiSantos.AutoFill.App.csproj", "{5A4C1B14-DA4A-45C8-B48A-92A15F6C7A2E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -136,6 +138,18 @@ Global
 		{3C46EF78-EC4E-4855-9A6B-62A7FABC5423}.Release|x64.Build.0 = Release|Any CPU
 		{3C46EF78-EC4E-4855-9A6B-62A7FABC5423}.Release|x86.ActiveCfg = Release|Any CPU
 		{3C46EF78-EC4E-4855-9A6B-62A7FABC5423}.Release|x86.Build.0 = Release|Any CPU
+		{5A4C1B14-DA4A-45C8-B48A-92A15F6C7A2E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A4C1B14-DA4A-45C8-B48A-92A15F6C7A2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A4C1B14-DA4A-45C8-B48A-92A15F6C7A2E}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{5A4C1B14-DA4A-45C8-B48A-92A15F6C7A2E}.Debug|x64.Build.0 = Debug|Any CPU
+		{5A4C1B14-DA4A-45C8-B48A-92A15F6C7A2E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5A4C1B14-DA4A-45C8-B48A-92A15F6C7A2E}.Debug|x86.Build.0 = Debug|Any CPU
+		{5A4C1B14-DA4A-45C8-B48A-92A15F6C7A2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A4C1B14-DA4A-45C8-B48A-92A15F6C7A2E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A4C1B14-DA4A-45C8-B48A-92A15F6C7A2E}.Release|x64.ActiveCfg = Release|Any CPU
+		{5A4C1B14-DA4A-45C8-B48A-92A15F6C7A2E}.Release|x64.Build.0 = Release|Any CPU
+		{5A4C1B14-DA4A-45C8-B48A-92A15F6C7A2E}.Release|x86.ActiveCfg = Release|Any CPU
+		{5A4C1B14-DA4A-45C8-B48A-92A15F6C7A2E}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -154,5 +168,6 @@ Global
 		{92B4ECB5-176F-43DB-B7BA-55B3B6B89DB4} = {C5B330AB-8A40-4A8B-B14F-E0D0BD8B209B}
 		{4B53AECA-44B9-40BE-B2B9-E42AE7F1BED0} = {A5572DFA-C874-419F-8DE6-78E0A37DCD6E}
 		{3C46EF78-EC4E-4855-9A6B-62A7FABC5423} = {209AF993-8F8D-49D7-9E81-C54FB6B9CEC6}
+		{5A4C1B14-DA4A-45C8-B48A-92A15F6C7A2E} = {D4608212-7E0A-4342-B782-1E5A46606E52}
 	EndGlobalSection
 EndGlobal
