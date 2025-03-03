@@ -13,6 +13,7 @@
       <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.2" />
       <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.2" />
       <PackageReference Include="Microsoft.Extensions.Options" Version="9.0.2" />
+      <PackageReference Include="MimeKitLite" Version="4.10.0" />
       <PackageReference Include="RestSharp" Version="112.1.0" />
     </ItemGroup>
 

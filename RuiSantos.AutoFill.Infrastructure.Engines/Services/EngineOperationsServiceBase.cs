@@ -55,9 +55,9 @@ public abstract class EngineOperationsServiceBase<TSettings>(
     /// <summary>
     /// Converts the provided document to Markdown format.
     /// </summary>
-    /// <param name="file">The StreamReader for the document file.</param>
+    /// <param name="fileName">The name of the file to convert.</param>
     /// <returns>A task representing the asynchronous operation.</returns>
-    public Task<string> ConvertDocumentToMarkdownAsync(StreamReader file)
+    public Task<string> ConvertDocumentToMarkdownAsync(string fileName)
     {
         throw new NotImplementedException();
     }

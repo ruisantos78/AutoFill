@@ -41,4 +41,28 @@ internal class TemplateManagerService(
         await templateDocumentRepository.CreateAsync(template);
         return template;
     }
+
+   /// <summary>
+   /// Converts a document into Markdown format.
+   /// </summary>
+   /// <param name="filePath">The path to the document file.</param>
+   /// <returns>A task that represents the asynchronous operation. The task result contains the Markdown formatted string.</returns>
+   /// <exception cref="TemplateManagerServiceException">Thrown when the file is not found or the conversion to Markdown fails.</exception>
+   public async Task<string> ConvertDocumentIntoMarkdownAsync(string filePath)
+   {
+       if (!File.Exists(filePath))
+           throw new TemplateManagerServiceException(
+               ErrorCodes.FileNotFound, 
+               nameof(ConvertDocumentIntoMarkdownAsync), 
+               $"The file {filePath} was not found.");
+       
+       var markdown = await engineOperationsService.ConvertDocumentToMarkdownAsync(filePath);
+       if (string.IsNullOrWhiteSpace(markdown))
+           throw new TemplateManagerServiceException(
+               ErrorCodes.MarkdownConvertionFailed, 
+               nameof(ConvertDocumentIntoMarkdownAsync), 
+               $"The conversion of the file {filePath} to Markdown failed.");
+           
+       return markdown;
+   }
 }

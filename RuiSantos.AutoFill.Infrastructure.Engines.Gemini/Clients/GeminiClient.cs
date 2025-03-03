@@ -1,6 +1,7 @@
 using System.Net;
 using System.Text.Json.Nodes;
 using Microsoft.Extensions.Options;
+using MimeKit;
 using RuiSantos.AutoFill.Infrastructure.Engines.Clients;
 using RuiSantos.AutoFill.Infrastructure.Engines.Interfaces;
 
@@ -35,6 +36,11 @@ public class GeminiClient(IOptions<GeminiSettings> options, IHttpClientFactory h
                         }
                     }
                 }
+            },
+            generation_config = new
+            {
+                temperature = settings.Temperature,
+                max_output_tokens = 8192
             }
         };
         
@@ -43,6 +49,50 @@ public class GeminiClient(IOptions<GeminiSettings> options, IHttpClientFactory h
             throw new Exception(errorMessage);
 
         return GetResponse<TResponse>(response.Content);
+    }
+
+    /// <summary>
+    /// Uploads a file and executes a prompt asynchronously.
+    /// </summary>
+    /// <param name="prompt">The prompt to be executed.</param>
+    /// <param name="fileName">The file to be uploaded.</param>
+    /// <returns>A task that represents the asynchronous operation, containing the response as a string.</returns>
+    public override async Task<string> UploadFileAndExecuteAsync(string prompt, string fileName)
+    {
+        var fileBytes= await File.ReadAllBytesAsync(fileName); 
+        
+        var request = new
+        {
+            contents = new[]
+            {
+                new
+                {
+                    parts = new[]
+                    {
+                        new
+                        {
+                            text = prompt,
+                            inline_data = new
+                            {
+                                mime_type = MimeTypes.GetMimeType(fileName),
+                                data = Convert.ToBase64String(fileBytes)
+                            }
+                        }
+                    }
+                }
+            },
+            generation_config = new
+            {
+                temperature = settings.Temperature,
+                max_output_tokens = 8192
+            }
+        };
+        
+        var response = await client.PostAsync($"/models/{settings.ModelName}?key={settings.ApiKey}", request);
+        if (HasErrors(response, out var errorMessage))
+            throw new Exception(errorMessage);
+
+        return response.Content ?? string.Empty;
     }
 
     /// <summary>

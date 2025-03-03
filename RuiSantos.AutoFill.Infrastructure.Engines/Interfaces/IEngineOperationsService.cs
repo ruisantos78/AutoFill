@@ -17,7 +17,7 @@ public interface IEngineOperationsService
     /// <summary>
     /// Converts the provided document to Markdown format.
     /// </summary>
-    /// <param name="file">The StreamReader of the document to convert.</param>
+    /// <param name="fileName">The name of the file to convert.</param>
     /// <returns>A task that represents the asynchronous operation. The task result contains the Markdown formatted string.</returns>
-    Task<string> ConvertDocumentToMarkdownAsync(StreamReader file);
+    Task<string> ConvertDocumentToMarkdownAsync(string fileName);
 }

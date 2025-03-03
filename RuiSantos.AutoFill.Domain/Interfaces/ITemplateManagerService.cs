@@ -14,4 +14,11 @@ public interface ITemplateManagerService
     /// <param name="documentText">The text content of the document.</param>
     /// <returns>A task that represents the asynchronous operation. The task result contains the generated TemplateDocument.</returns>
     Task<TemplateDocument> GenerateTemplateFromDocumentAsync(string documentName, string documentText);
+    
+    /// <summary>
+    /// Converts a document into Markdown format.
+    /// </summary>
+    /// <param name="filePath">The path to the document file.</param>
+    /// <returns>A task that represents the asynchronous operation. The task result contains the Markdown formatted string.</returns>
+    Task<string> ConvertDocumentIntoMarkdownAsync(string filePath);
 }

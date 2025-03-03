@@ -23,8 +23,8 @@ partial class GeminiOperationsServiceTests
         // Assert
         Assert.NotEmpty(fields);
         Assert.Contains(fields, f => f.Value == "João Carlos Silva Oliveira");
-        Assert.Contains(fields, f => f.Value == "Brasileiro");
-        Assert.Contains(fields, f => f.Value == "solteiro");
+        Assert.Contains(fields, f => f.Value == "Brazilian");
+        Assert.Contains(fields, f => f.Value == "single");
         Assert.Contains(fields, f => f.Value == "12.345.678-9");
         Assert.Contains(fields, f => f.Value == "123.456.789-10");
     }

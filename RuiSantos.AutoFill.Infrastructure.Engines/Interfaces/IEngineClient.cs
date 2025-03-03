@@ -19,4 +19,12 @@ public interface IEngineClient
     /// <param name="prompt">The prompt to execute.</param>
     /// <returns>A task that represents the asynchronous operation. The task result contains the response as the specified type.</returns>
     Task<TResponse?> ExecutePromptAsync<TResponse>(string prompt) where TResponse : class;
+    
+    /// <summary>
+    /// Uploads a file and executes a prompt, returning the response as a string.
+    /// </summary>
+    /// <param name="prompt">The prompt to execute.</param>
+    /// <param name="fileName">The file to upload.</param>
+    /// <returns>A task that represents the asynchronous operation. The task result contains the response as a string.</returns>
+    Task<string> UploadFileAndExecuteAsync(string prompt, string fileName);
 }

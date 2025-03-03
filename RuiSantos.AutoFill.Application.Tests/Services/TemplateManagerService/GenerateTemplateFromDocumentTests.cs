@@ -31,8 +31,8 @@ public class GenerateTemplateFromDocumentTests(ServiceProviderFixture provider, 
 
         Assert.NotEmpty(template.Fields);
         Assert.Contains(template.Fields, f => f.Value == "João Carlos Silva Oliveira");
-        Assert.Contains(template.Fields, f => f.Value == "Brasileiro");
-        Assert.Contains(template.Fields, f => f.Value == "solteiro");
+        Assert.Contains(template.Fields, f => f.Value == "Brazilian");
+        Assert.Contains(template.Fields, f => f.Value == "single");
         Assert.Contains(template.Fields, f => f.Value == "12.345.678-9");
         Assert.Contains(template.Fields, f => f.Value == "123.456.789-10");
 
