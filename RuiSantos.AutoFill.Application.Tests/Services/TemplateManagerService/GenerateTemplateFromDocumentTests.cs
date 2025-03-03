@@ -8,7 +8,7 @@ using Xunit.Abstractions;
 
 namespace RuiSantos.AutoFill.Application.Tests.Services.TemplateManagerService;
 
-public class GenerateTemplateFromDocumentTests(ServiceProviderFixture provider, ITestOutputHelper output) 
+public class GenerateTemplateFromDocumentTests(ServiceProviderFixture provider) 
     : IClassFixture<ServiceProviderFixture>
 {
     private IDataContext DataContext => provider.GetService<IDataContext>();
