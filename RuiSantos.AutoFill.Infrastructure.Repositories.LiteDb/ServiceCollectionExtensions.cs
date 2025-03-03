@@ -20,13 +20,23 @@ public static class ServiceCollectionExtensions
     /// Registers LiteDb services and configurations in the <see cref="IServiceCollection"/>.
     /// </summary>
     /// <param name="services">The service collection to add the services to.</param>
+    /// <param name="options">A function that returns the connection string for the LiteDb database.</param>
+    /// <returns>The updated service collection.</returns>
+    public static IServiceCollection UseLiteDb(this IServiceCollection services, Func<string> options)
+    {
+        return services.UseLiteDb(options.Invoke());
+    }
+    
+    /// <summary>
+    /// Registers LiteDb services and configurations in the <see cref="IServiceCollection"/>.
+    /// </summary>
+    /// <param name="services">The service collection to add the services to.</param>
     /// <param name="connectionString">The connection string for the LiteDb database.</param>
     /// <returns>The updated service collection.</returns>
     public static IServiceCollection UseLiteDb(this IServiceCollection services, string connectionString)
     {
-        return services
+        return services.UseRepository<LiteDbContext>()
             .AddSingleton(Options.Create(new LiteDbSettings(connectionString)))
-            .UseRepository<LiteDbContext>()
             .AddScoped<ITemplateDocumentRepository, TemplateDocumentRepository>();
     }
 }

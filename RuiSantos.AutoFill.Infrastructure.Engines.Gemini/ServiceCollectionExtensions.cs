@@ -21,11 +21,26 @@ public static class ServiceCollectionExtensions
     /// <param name="services">The service collection to add the services to.</param>
     /// <param name="options">The configuration to bind the Gemini settings from.</param>
     /// <returns>The updated service collection.</returns>
+    /// <remarks>
+    /// This method synchronously invokes the provided options function to retrieve the <see cref="GeminiSettings"/>.
+    /// It then registers the necessary services for the Gemini engine, including the <see cref="GeminiClient"/> and <see cref="GeminiOperationsService"/>.
+    /// </remarks>
+    public static IServiceCollection UseGeminiEngine(this IServiceCollection services, Func<Task<GeminiSettings>> options)
+    {
+        var geminiSettings = options.Invoke().GetAwaiter().GetResult();
+        return services.UseGeminiEngine(geminiSettings);
+    }
+    
+    /// <summary>
+    /// Registers the Gemini engine services with the specified <see cref="IServiceCollection"/>.
+    /// </summary>
+    /// <param name="services">The service collection to add the services to.</param>
+    /// <param name="options">The configuration options for the Gemini engine.</param>
+    /// <returns>The updated service collection.</returns>
     public static IServiceCollection UseGeminiEngine(this IServiceCollection services, GeminiSettings options)
     {
-        return services
+        return services.UseEngine<GeminiClient>()
             .AddSingleton(Options.Create(options))
-            .UseEngine<GeminiClient>()
             .AddScoped<IEngineOperationsService, GeminiOperationsService>();
     }
 }

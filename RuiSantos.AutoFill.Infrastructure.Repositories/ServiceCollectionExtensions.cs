@@ -21,7 +21,6 @@ public static class ServiceCollectionExtensions
         if (services.Any(x => x.ServiceType == typeof(IDataContext)))
             throw new InvalidOperationException("Data context service has already been registered");
         
-        return services
-            .AddScoped<IDataContext, TDataContext>();
+        return services.AddScoped<IDataContext, TDataContext>();
     }
 }

@@ -15,8 +15,6 @@ public static class MauiProgram
 {
     public static MauiApp CreateMauiApp()
     {
-        var databaseFile = Path.Combine(FileSystem.AppDataDirectory, "RuiSantos.AutoFill.Test.db");
-        
         var builder = MauiApp.CreateBuilder();
         builder
             .UseMauiApp<App>()
@@ -32,8 +30,8 @@ public static class MauiProgram
             });
         
         builder.Services
-            .UseLiteDb($"Filename={databaseFile};connection=shared")
-            .UseGeminiEngine(new GeminiSettings() { ApiKey = "..." })
+            .UseLiteDb(GetDatabaseFile)
+            .UseGeminiEngine(GetEngineSettings)
             .UseAutoFill()
             .UseAutoFillApp();
         
@@ -42,8 +40,20 @@ public static class MauiProgram
 #endif
 
         return builder.Build();
+        
+        string GetDatabaseFile()
+        {
+            var databaseFile = Path.Combine(FileSystem.AppDataDirectory, "RuiSantos.AutoFill.db");
+            return databaseFile;
+        }
+        
+        async Task<GeminiSettings> GetEngineSettings()
+        {
+            var engineToken = await SecureStorage.Default.GetAsync("GeminiApiKey");
+            return new GeminiSettings() { ApiKey = engineToken ?? "test_mode" };
+        }
     }
-
+    
     private static IServiceCollection UseAutoFillApp(this IServiceCollection services)
     {
         // Services

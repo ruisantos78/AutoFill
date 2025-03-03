@@ -9,34 +9,34 @@ using RuiSantos.AutoFill.Infrastructure.Repositories.LiteDb;
 
 namespace RuiSantos.AutoFill.Application.Tests.Fixtures;
 
-public sealed class ServiceProviderFixture: IDisposable
+public sealed class ServiceProviderFixture : IDisposable
 {
     public IDataContext DataContext { get; }
 
     private readonly IServiceProvider _provider;
-    
+
     public ServiceProviderFixture()
     {
-        var options = new GeminiSettings();
+        const string connectionString = "Filename=:memory:";
         
         var configuration = ConfigurationFactory.Create();
-        configuration.GetSection("Engine:Gemini").Bind(options);
-        
+        var geminiSettings = configuration.GetSection("Engine:Gemini").Get<GeminiSettings>() ?? new GeminiSettings();
+
         _provider = new ServiceCollection()
             .AddLogging(loggingBuilder => loggingBuilder.AddDebug())
             .UseAutoFill()
-            .UseLiteDb("Filename=:memory:")
-            .UseGeminiEngine(options)
+            .UseLiteDb(connectionString)
+            .UseGeminiEngine(geminiSettings)
             .BuildServiceProvider();
-        
-        this.DataContext =  _provider.GetRequiredService<IDataContext>();
+
+        this.DataContext = _provider.GetRequiredService<IDataContext>();
     }
-    
-    public TService GetService<TService>() where TService : class 
+
+    public TService GetService<TService>() where TService : class
         => _provider.GetRequiredService<TService>();
-    
+
     public void Dispose()
     {
-        DataContext.Dispose(); 
+        DataContext.Dispose();
     }
 }

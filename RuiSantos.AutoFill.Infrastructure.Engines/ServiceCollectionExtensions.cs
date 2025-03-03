@@ -22,9 +22,8 @@ public static class ServiceCollectionExtensions
         if (services.Any(x => x.ServiceType == typeof(IEngineClient)))
             throw new InvalidOperationException("Engine client service has already been registered");
 
-        services.AddSingleton<IHttpClientFactory, HttpClientFactory>();
-        services.AddScoped<IEngineClient, TEngine>();
-        
-        return services;
+        return services
+            .AddSingleton<IHttpClientFactory, HttpClientFactory>()
+            .AddScoped<IEngineClient, TEngine>();
     }
 }
