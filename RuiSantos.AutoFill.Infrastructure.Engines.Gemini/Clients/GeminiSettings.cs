@@ -10,7 +10,7 @@ public class GeminiSettings: EngineSettingsBase
     /// <summary>
     /// Gets the API key required for authentication.
     /// </summary>
-    public required string ApiKey { get; init; }
+    public string ApiKey { get; init; } = string.Empty;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="GeminiSettings"/> class.

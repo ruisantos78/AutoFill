@@ -1,6 +1,6 @@
 using System.Runtime.CompilerServices;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using RuiSantos.AutoFill.Infrastructure.Repositories.Interfaces;
 using RuiSantos.AutoFill.Infrastructure.Repositories.LiteDb.Data;
 using RuiSantos.AutoFill.Infrastructure.Repositories.LiteDb.Services;
@@ -20,18 +20,13 @@ public static class ServiceCollectionExtensions
     /// Registers LiteDb services and configurations in the <see cref="IServiceCollection"/>.
     /// </summary>
     /// <param name="services">The service collection to add the services to.</param>
-    /// <param name="configuration">The application configuration.</param>
+    /// <param name="connectionString">The connection string for the LiteDb database.</param>
     /// <returns>The updated service collection.</returns>
-    public static IServiceCollection UseLiteDb(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection UseLiteDb(this IServiceCollection services, string connectionString)
     {
-        services.UseRepository<LiteDbContext>();
-        
-        // Configure LiteDb settings
-        services.Configure<LiteDbSettings>(options => configuration.GetSection("Repository:LiteDb").Bind(options));
-        
-        // Register the template document repository service
-        services.AddScoped<ITemplateDocumentRepository, TemplateDocumentRepository>();
-        
-        return services;
+        return services
+            .AddSingleton(Options.Create(new LiteDbSettings(connectionString)))
+            .UseRepository<LiteDbContext>()
+            .AddScoped<ITemplateDocumentRepository, TemplateDocumentRepository>();
     }
 }

@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using RuiSantos.AutoFill.Application.Tests.Factories;
 using RuiSantos.AutoFill.Infrastructure.Engines.Gemini;
+using RuiSantos.AutoFill.Infrastructure.Engines.Gemini.Clients;
 using RuiSantos.AutoFill.Infrastructure.Repositories.Interfaces;
 using RuiSantos.AutoFill.Infrastructure.Repositories.LiteDb;
 
@@ -18,13 +19,16 @@ public sealed class ServiceProviderFixture: IDisposable
     
     public ServiceProviderFixture()
     {
+        var options = new GeminiSettings();
+        
         _configuration = ConfigurationFactory.Create();
+        _configuration.GetSection("Engine:Gemini").Bind(options);
         
         _provider = new ServiceCollection()
             .AddLogging(loggingBuilder => loggingBuilder.AddDebug())
-            .UseAutoFill(_configuration)
-            .UseLiteDb(_configuration)
-            .UseGeminiEngine(_configuration)
+            .UseAutoFill()
+            .UseLiteDb("Filename=RuiSantos.AutoFill.Test.db;connection=shared")
+            .UseGeminiEngine(options)
             .BuildServiceProvider();
         
         this.DataContext =  _provider.GetRequiredService<IDataContext>();

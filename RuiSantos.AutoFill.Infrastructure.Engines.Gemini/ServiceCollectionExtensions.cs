@@ -1,6 +1,6 @@
 using System.Runtime.CompilerServices;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using RuiSantos.AutoFill.Infrastructure.Engines.Gemini.Clients;
 using RuiSantos.AutoFill.Infrastructure.Engines.Gemini.Services;
 using RuiSantos.AutoFill.Infrastructure.Engines.Interfaces;
@@ -19,15 +19,13 @@ public static class ServiceCollectionExtensions
     /// Registers the Gemini engine services with the specified <see cref="IServiceCollection"/>.
     /// </summary>
     /// <param name="services">The service collection to add the services to.</param>
-    /// <param name="configuration">The configuration to bind the Gemini settings from.</param>
+    /// <param name="options">The configuration to bind the Gemini settings from.</param>
     /// <returns>The updated service collection.</returns>
-    public static IServiceCollection UseGeminiEngine(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection UseGeminiEngine(this IServiceCollection services, GeminiSettings options)
     {
-        services.UseEngine<GeminiClient>();
-        
-        services.Configure<GeminiSettings>(options => configuration.GetSection("Engine:Gemini").Bind(options));
-        services.AddScoped<IEngineOperationsService, GeminiOperationsService>();
-        
-        return services;
+        return services
+            .AddSingleton(Options.Create(options))
+            .UseEngine<GeminiClient>()
+            .AddScoped<IEngineOperationsService, GeminiOperationsService>();
     }
 }

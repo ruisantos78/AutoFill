@@ -1,0 +1,142 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:vm="clr-namespace:RuiSantos.AutoFill.App.ViewModels"
+             x:Class="RuiSantos.AutoFill.App.UI.Pages.MainPage"
+             x:DataType="vm:MainViewModel"
+             Title="AutoFill Forms"
+             BackgroundColor="{StaticResource BackgroundColor}">
+    <Grid RowDefinitions="Auto, *">
+        <!-- Header area -->
+        <Grid Grid.Row="0" Style="{StaticResource HeaderLayoutStyle}" ColumnDefinitions="Auto,*,Auto">
+            <Label Text="Forms" Style="{StaticResource HeadingStyle}" />
+
+            <!-- Search area -->
+            <Border Grid.Column="1" Style="{StaticResource SearchBarStyle}" Margin="40,0">
+                <Grid ColumnDefinitions="Auto,*">
+                    <Image VerticalOptions="Center" Margin="8,0">
+                        <Image.Source>
+                            <FontImageSource FontFamily="MaterialIcons"
+                                             Glyph="&#xE8B6;"
+                                             Color="{StaticResource TextSecondaryColor}"
+                                             Size="20" />
+                        </Image.Source>
+                    </Image>
+
+                    <Entry Grid.Column="1" Style="{StaticResource SearchEntryStyle}" />
+                </Grid>
+            </Border>
+
+            <!-- Header buttons -->
+            <HorizontalStackLayout Grid.Column="2" Spacing="12" VerticalOptions="Center">
+                <!-- Sort Button -->
+                <ImageButton Style="{StaticResource IconButtonStyle}">
+                    <ImageButton.Source>
+                        <FontImageSource FontFamily="MaterialIcons"
+                                         Glyph="&#xE164;"
+                                         Color="{StaticResource TextSecondaryColor}"
+                                         Size="24" />
+                    </ImageButton.Source>
+                </ImageButton>
+
+                <!-- View Button -->
+                <ImageButton Style="{StaticResource IconButtonStyle}">
+                    <ImageButton.Source>
+                        <FontImageSource FontFamily="MaterialIcons"
+                                         Glyph="&#xE8F0;"
+                                         Color="{StaticResource TextSecondaryColor}"
+                                         Size="24" />
+                    </ImageButton.Source>
+                </ImageButton>
+            </HorizontalStackLayout>
+        </Grid>
+
+        <!-- Main content area -->
+        <Grid Grid.Row="1" Style="{StaticResource ContentLayoutStyle}">
+            <!-- Forms list -->
+            <CollectionView SelectionMode="Single">
+                <CollectionView.EmptyView>
+                    <Grid VerticalOptions="Center" HorizontalOptions="Center">
+                        <VerticalStackLayout HorizontalOptions="Center">
+                            <Image HorizontalOptions="Center" HeightRequest="120" WidthRequest="120">
+                                <Image.Source>
+                                    <FontImageSource FontFamily="MaterialIcons"
+                                                     Glyph="&#xE2C7;"
+                                                     Color="{StaticResource TextTertiaryColor}"
+                                                     Size="120" />
+                                </Image.Source>
+                            </Image>
+                            <Label Text="No forms found" Style="{StaticResource EmptyTitleStyle}" Margin="0,16,0,0" />
+                            <Label Text="Upload a form to get started" Style="{StaticResource EmptySubtitleStyle}"
+                                   Margin="0,8,0,0" />
+                        </VerticalStackLayout>
+                    </Grid>
+                </CollectionView.EmptyView>
+
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical" Span="1" VerticalItemSpacing="8" />
+                </CollectionView.ItemsLayout>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Border Style="{StaticResource CardStyle}">
+                            <Grid Style="{StaticResource CardContentStyle}" ColumnDefinitions="Auto,*,Auto"
+                                  RowDefinitions="Auto,Auto,Auto">
+                                <Image Grid.RowSpan="3" VerticalOptions="Center" Margin="0,0,16,0" HeightRequest="36"
+                                       WidthRequest="36">
+                                    <Image.Source>
+                                        <FontImageSource FontFamily="MaterialIcons"
+                                                         Glyph="&#xE24D;"
+                                                         Color="#DB4437"
+                                                         Size="36" />
+                                    </Image.Source>
+                                </Image>
+
+                                <Label Grid.Column="1" Text="Form Name" Style="{StaticResource TitleStyle}" />
+                                <Label Grid.Column="1" Grid.Row="1" Text="Form Description"
+                                       Style="{StaticResource SubtitleStyle}" Margin="0,4,0,0" />
+                                <Label Grid.Column="1" Grid.Row="2" Text="Created on 3/3/2025"
+                                       Style="{StaticResource CaptionStyle}" Margin="0,4,0,0" />
+
+                                <HorizontalStackLayout Grid.Column="2" Grid.RowSpan="3"
+                                                       Style="{StaticResource HorizontalActionLayoutStyle}">
+                                    <!-- Edit Button -->
+                                    <ImageButton Style="{StaticResource CircularIconButtonStyle}">
+                                        <ImageButton.Source>
+                                            <FontImageSource FontFamily="MaterialIcons"
+                                                             Glyph="&#xE3C9;"
+                                                             Color="{StaticResource TextSecondaryColor}"
+                                                             Size="20" />
+                                        </ImageButton.Source>
+                                    </ImageButton>
+
+                                    <!-- Delete Button -->
+                                    <ImageButton Style="{StaticResource CircularIconButtonStyle}">
+                                        <ImageButton.Source>
+                                            <FontImageSource FontFamily="MaterialIcons"
+                                                             Glyph="&#xE872;"
+                                                             Color="{StaticResource ErrorColor}"
+                                                             Size="20" />
+                                        </ImageButton.Source>
+                                    </ImageButton>
+                                </HorizontalStackLayout>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <!-- Upload Button (Google Docs style) -->
+            <Button Style="{StaticResource FloatingActionButtonStyle}"
+                    Text="+"
+                    Command="{Binding UploadFileCommand}" />
+
+            <Entry IsPassword="True" 
+                   Text="{Binding GeminiApiKey}" 
+                   HorizontalOptions="Start" 
+                   VerticalOptions="End"/>
+        </Grid>
+    </Grid>
+</ContentPage>

@@ -1,5 +1,4 @@
 using System.Runtime.CompilerServices;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RuiSantos.AutoFill.Application.Services;
 using RuiSantos.AutoFill.Domain.Interfaces;
@@ -18,9 +17,8 @@ public static class ServiceCollectionExtensions
     /// Registers the AutoFill services in the specified IServiceCollection.
     /// </summary>
     /// <param name="services">The IServiceCollection to add the services to.</param>
-    /// <param name="configuration">The IConfiguration instance for configuration settings.</param>
     /// <returns>The IServiceCollection with the registered services.</returns>
-    public static IServiceCollection UseAutoFill(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection UseAutoFill(this IServiceCollection services)
     {
         // Register the field detection service
         services.AddScoped<ITemplateManagerService, TemplateManagerService>();

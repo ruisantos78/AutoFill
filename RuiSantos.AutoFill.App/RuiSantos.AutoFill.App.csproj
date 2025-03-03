@@ -1,10 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFrameworks>net9.0-android;net9.0-ios;net9.0-maccatalyst</TargetFrameworks>
-        <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net9.0-windows10.0.19041.0</TargetFrameworks>
+        <TargetFramework>net9.0-maccatalyst</TargetFramework>
+        <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFramework);net9.0-windows10.0.19041.0</TargetFrameworks>
         <!-- Uncomment to also build the tizen app. You will need to install tizen by following this: https://github.com/Samsung/Tizen.NET -->
         <!-- <TargetFrameworks>$(TargetFrameworks);net9.0-tizen</TargetFrameworks> -->
+        <!--<TargetFrameworks>net9.0-android;net9.0-ios;net9.0-maccatalyst</TargetFrameworks>-->
 
         <!-- Note for MacCatalyst:
         The default runtime is maccatalyst-x64, except in Release config, in which case the default is maccatalyst-x64;maccatalyst-arm64.
@@ -33,12 +34,12 @@
         <!-- To develop, package, and publish an app to the Microsoft Store, see: https://aka.ms/MauiTemplateUnpackaged -->
         <WindowsPackageType>None</WindowsPackageType>
 
-        <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">15.0</SupportedOSPlatformVersion>
-        <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">15.0</SupportedOSPlatformVersion>
-        <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
-        <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
         <TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
-        <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
+        <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">15.0</SupportedOSPlatformVersion>
+        <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
+<!--        <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">15.0</SupportedOSPlatformVersion>-->
+<!--        <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>-->
+<!--        <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>-->
     </PropertyGroup>
 
     <ItemGroup>
@@ -60,21 +61,67 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.2" />
-        <PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)"/>
+        <PackageReference Include="CommunityToolkit.Maui" Version="11.1.0"/>
+        <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0"/>
+        <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.2"/>
+        <PackageReference Include="Microsoft.Maui.Controls" Version="9.0.40"/>
         <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.0-rc.1.24431.7"/>
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\RuiSantos.AutoFill.Application\RuiSantos.AutoFill.Application.csproj" />
-      <ProjectReference Include="..\RuiSantos.AutoFill.Infrastructure.Engines.Gemini\RuiSantos.AutoFill.Infrastructure.Engines.Gemini.csproj" />
-      <ProjectReference Include="..\RuiSantos.AutoFill.Infrastructure.Repositories.LiteDb\RuiSantos.AutoFill.Infrastructure.Repositories.LiteDb.csproj" />
+        <ProjectReference Include="..\RuiSantos.AutoFill.Application\RuiSantos.AutoFill.Application.csproj"/>
+        <ProjectReference Include="..\RuiSantos.AutoFill.Infrastructure.Engines.Gemini\RuiSantos.AutoFill.Infrastructure.Engines.Gemini.csproj"/>
+        <ProjectReference Include="..\RuiSantos.AutoFill.Infrastructure.Repositories.LiteDb\RuiSantos.AutoFill.Infrastructure.Repositories.LiteDb.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-      <None Update="appsettings.json">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
+        <None Remove="Platforms\Tizen\**" />
+        <None Remove="Platforms\iOS\**" />
+        <None Remove="Platforms\Android\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Folder Include="UI\Behaviors\"/>
+        <Folder Include="UI\Controls\"/>
+        <Folder Include="UI\Windows\"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <MauiXaml Update="UI\Pages\MainPage.xaml">
+            <SubType>Designer</SubType>
+        </MauiXaml>
+        <MauiXaml Remove="Platforms\Tizen\**" />
+        <MauiXaml Remove="Platforms\iOS\**" />
+        <MauiXaml Remove="Platforms\Android\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Compile Update="UI\Pages\MainPage.xaml.cs">
+            <DependentUpon>MainPage.xaml</DependentUpon>
+            <SubType>Code</SubType>
+        </Compile>
+        <Compile Remove="Platforms\Tizen\**" />
+        <Compile Remove="Platforms\iOS\**" />
+        <Compile Remove="Platforms\Android\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <MauiCss Remove="Platforms\Tizen\**" />
+      <MauiCss Remove="Platforms\iOS\**" />
+      <MauiCss Remove="Platforms\Android\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Remove="Platforms\Tizen\**" />
+      <EmbeddedResource Remove="Platforms\iOS\**" />
+      <EmbeddedResource Remove="Platforms\Android\**" />
+      <None Remove="appsettings.json" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <MauiPlatformSpecificFolder Remove="Platforms\Tizen\" />
+      <MauiPlatformSpecificFolder Remove="Platforms\iOS\" />
+      <MauiPlatformSpecificFolder Remove="Platforms\Android\" />
     </ItemGroup>
 
 </Project>
