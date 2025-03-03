@@ -11,7 +11,7 @@ partial class GeminiOperationsServiceTests
     public async Task DetectFieldsAndValuesAsync_ValidResponse_ReturnsDetectedFields()
     {
         // Arrange
-        var document = await Resources.GetStringAsync("Gemini.Contents.DetectFieldsAndValues.Document");
+        var document = await Resources.GetStringAsync("Gemini.Contents.Default.Document");
         var response = await Resources.GetStringAsync("Gemini.Contents.DetectFieldsAndValues.Response");
         
         _client.PostAsync(Arg.Any<string>(), Arg.Any<object>())
@@ -33,16 +33,17 @@ partial class GeminiOperationsServiceTests
     public async Task DetectFieldsAndValuesAsync_BadResponse_ThrowsException()
     {
         // Arrange
-        var document = await Resources.GetStringAsync("Gemini.Contents.DetectFieldsAndValues.Document");
-        var error = await Resources.GetStringAsync("Gemini.Contents.DetectFieldsAndValues.Error");
+        var document = await Resources.GetStringAsync("Gemini.Contents.Default.Document");
+        var error = await Resources.GetStringAsync("Gemini.Contents.Default.Error");
         
         _client.PostAsync(Arg.Any<string>(), Arg.Any<object>())
             .Returns(Task.FromResult(new HttpPostResponse(HttpStatusCode.BadRequest, error)));
         
-        // Act & Assert
+        // Act
         var exception = await Assert.ThrowsAsync<Exception>(async () => 
             await _service.DetectFieldsAndValuesAsync(document));
         
+        // Assert
         Assert.Equal("API key not valid. Please pass a valid API key.", exception.Message);
     }
 }

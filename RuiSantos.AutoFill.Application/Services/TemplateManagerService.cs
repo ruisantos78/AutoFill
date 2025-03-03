@@ -59,7 +59,7 @@ internal class TemplateManagerService(
        var markdown = await engineOperationsService.ConvertDocumentToMarkdownAsync(filePath);
        if (string.IsNullOrWhiteSpace(markdown))
            throw new TemplateManagerServiceException(
-               ErrorCodes.MarkdownConvertionFailed, 
+               ErrorCodes.MarkdownConversionFailed, 
                nameof(ConvertDocumentIntoMarkdownAsync), 
                $"The conversion of the file {filePath} to Markdown failed.");
            

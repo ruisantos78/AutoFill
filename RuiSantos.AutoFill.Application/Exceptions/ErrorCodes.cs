@@ -18,5 +18,5 @@ public static class ErrorCodes
     /// <summary>
     /// Error code indicating that the Markdown conversion failed.
     /// </summary>
-    public const int MarkdownConvertionFailed = 3;
+    public const int MarkdownConversionFailed = 3;
 }
