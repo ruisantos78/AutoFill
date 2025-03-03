@@ -9,15 +9,15 @@
 
     <ItemGroup>
         <PackageReference Include="coverlet.collector" Version="6.0.4">
-          <PrivateAssets>all</PrivateAssets>
-          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.13.0" />
-        <PackageReference Include="NSubstitute" Version="5.3.0" />
-        <PackageReference Include="xunit" Version="2.9.3" />
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.13.0"/>
+        <PackageReference Include="NSubstitute" Version="5.3.0"/>
+        <PackageReference Include="xunit" Version="2.9.3"/>
         <PackageReference Include="xunit.runner.visualstudio" Version="3.0.2">
-          <PrivateAssets>all</PrivateAssets>
-          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
     </ItemGroup>
 
@@ -26,26 +26,22 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\RuiSantos.AutoFill.Application\RuiSantos.AutoFill.Application.csproj" />
-      <ProjectReference Include="..\RuiSantos.AutoFill.Infrastructure.Engines.Gemini\RuiSantos.AutoFill.Infrastructure.Engines.Gemini.csproj" />
-      <ProjectReference Include="..\RuiSantos.AutoFill.Infrastructure.Repositories\RuiSantos.AutoFill.Infrastructure.Repositories.csproj" />
+        <ProjectReference Include="..\RuiSantos.AutoFill.Application\RuiSantos.AutoFill.Application.csproj"/>
+        <ProjectReference Include="..\RuiSantos.AutoFill.Infrastructure.Engines.Gemini\RuiSantos.AutoFill.Infrastructure.Engines.Gemini.csproj"/>
+        <ProjectReference Include="..\RuiSantos.AutoFill.Infrastructure.Repositories\RuiSantos.AutoFill.Infrastructure.Repositories.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-      <None Remove="Engines\Gemini\Contents\DetectFieldsAndValuesError" />
-      <None Remove="Engines\Gemini\Contents\DetectFieldsAndValuesRequest" />
-      <None Remove="Engines\Gemini\Contents\DetectFieldsAndValuesResponse" />
+        <None Update="Resources\Files\**\*">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
     </ItemGroup>
 
     <ItemGroup>
-      <None Remove="Engines\Gemini\Contents\DetectFieldsAndValues.Document" />
-      <EmbeddedResource Include="Engines\Gemini\Contents\DetectFieldsAndValues.Document" />
-      <None Remove="Engines\Gemini\Contents\DetectFieldsAndValues.Error" />
-      <EmbeddedResource Include="Engines\Gemini\Contents\DetectFieldsAndValues.Error" />
-      <None Remove="Engines\Gemini\Contents\DetectFieldsAndValues.Request" />
-      <EmbeddedResource Include="Engines\Gemini\Contents\DetectFieldsAndValues.Request" />
-      <None Remove="Engines\Gemini\Contents\DetectFieldsAndValues.Response" />
-      <EmbeddedResource Include="Engines\Gemini\Contents\DetectFieldsAndValues.Response" />
+        <EmbeddedResource Include="Engines\Gemini\Contents\**\*"/>
     </ItemGroup>
 
+    <ItemGroup>
+        <Folder Include="Resources\Assets\"/>
+    </ItemGroup>
 </Project>

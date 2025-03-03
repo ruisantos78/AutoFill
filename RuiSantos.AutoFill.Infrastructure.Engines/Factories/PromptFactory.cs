@@ -29,9 +29,12 @@ internal static class PromptFactory
     /// </summary>
     /// <param name="document">The document to concatenate with the prompt resource.</param>
     /// <returns>A task that represents the asynchronous operation. The task result contains the concatenated string.</returns>
-    public static async Task<string> GetDetectFieldsAndValuesAsync(string document)
+    public static async Task<string> DetectFieldsAndValuesAsync(string document)
     {
         var resource = await GetResourceStringAsync("Resources.Prompts.DetectFieldsAndValues");
         return string.Concat(resource, document);
     }
+    
+    public static Task<string> ConvertDocumentToMarkdownAsync() 
+        => GetResourceStringAsync("Resources.Prompts.ConvertDocumentToMarkdown");
 }

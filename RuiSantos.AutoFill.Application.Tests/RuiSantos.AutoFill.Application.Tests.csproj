@@ -9,20 +9,20 @@
 
     <ItemGroup>
         <PackageReference Include="coverlet.collector" Version="6.0.4">
-          <PrivateAssets>all</PrivateAssets>
-          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="9.0.2" />
-        <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.2" />
-        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.2" />
-        <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.2" />
-        <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.2" />
-        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.13.0" />
-        <PackageReference Include="Warappa.Microsoft.Extensions.DependencyInjection.ServiceCollectionModule" Version="1.0.0" />
-        <PackageReference Include="xunit" Version="2.9.3" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="9.0.2"/>
+        <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.2"/>
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.2"/>
+        <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.2"/>
+        <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.2"/>
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.13.0"/>
+        <PackageReference Include="Warappa.Microsoft.Extensions.DependencyInjection.ServiceCollectionModule" Version="1.0.0"/>
+        <PackageReference Include="xunit" Version="2.9.3"/>
         <PackageReference Include="xunit.runner.visualstudio" Version="3.0.2">
-          <PrivateAssets>all</PrivateAssets>
-          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
     </ItemGroup>
 
@@ -31,23 +31,25 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\RuiSantos.AutoFill.Application\RuiSantos.AutoFill.Application.csproj" />
-      <ProjectReference Include="..\RuiSantos.AutoFill.Domain\RuiSantos.AutoFill.Domain.csproj" />
-      <ProjectReference Include="..\RuiSantos.AutoFill.Infrastructure.Engines.Gemini\RuiSantos.AutoFill.Infrastructure.Engines.Gemini.csproj" />
-      <ProjectReference Include="..\RuiSantos.AutoFill.Infrastructure.Repositories.LiteDb\RuiSantos.AutoFill.Infrastructure.Repositories.LiteDb.csproj" />
+        <ProjectReference Include="..\RuiSantos.AutoFill.Application\RuiSantos.AutoFill.Application.csproj"/>
+        <ProjectReference Include="..\RuiSantos.AutoFill.Domain\RuiSantos.AutoFill.Domain.csproj"/>
+        <ProjectReference Include="..\RuiSantos.AutoFill.Infrastructure.Engines.Gemini\RuiSantos.AutoFill.Infrastructure.Engines.Gemini.csproj"/>
+        <ProjectReference Include="..\RuiSantos.AutoFill.Infrastructure.Repositories.LiteDb\RuiSantos.AutoFill.Infrastructure.Repositories.LiteDb.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-      <None Update="appsettings.development.json">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
-      <None Update="appsettings.json">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
+        <None Update="appsettings.development.json">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="appsettings.json">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="Resources\Files\**\*">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
     </ItemGroup>
 
     <ItemGroup>
-      <EmbeddedResource Include="Resources\Documents\AdEtExtraJudicia" />
+        <EmbeddedResource Include="Resources\Documents\**\*"/>
     </ItemGroup>
-
 </Project>

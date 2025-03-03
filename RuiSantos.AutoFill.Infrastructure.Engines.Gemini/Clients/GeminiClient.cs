@@ -67,11 +67,14 @@ public class GeminiClient(IOptions<GeminiSettings> options, IHttpClientFactory h
             {
                 new
                 {
-                    parts = new[]
+                    parts = new object[]
                     {
                         new
                         {
-                            text = prompt,
+                            text = prompt
+                        },
+                        new
+                        {
                             inline_data = new
                             {
                                 mime_type = MimeTypes.GetMimeType(fileName),
@@ -92,7 +95,7 @@ public class GeminiClient(IOptions<GeminiSettings> options, IHttpClientFactory h
         if (HasErrors(response, out var errorMessage))
             throw new Exception(errorMessage);
 
-        return response.Content ?? string.Empty;
+        return GetResponse(response.Content) ?? string.Empty;
     }
 
     /// <summary>
@@ -116,6 +119,22 @@ public class GeminiClient(IOptions<GeminiSettings> options, IHttpClientFactory h
         return true;
     }
 
+    /// <summary>
+    /// Parses the response text and returns the response string.
+    /// </summary>
+    /// <param name="responseText">The response text.</param>
+    /// <returns>The parsed response string, or null if the response text is null.</returns>
+    protected string? GetResponse(string? responseText)
+    {
+        if (responseText is null) 
+            return null;
+
+        if (JsonNode.Parse(responseText) is not { } root)
+            return responseText;
+
+        return root["candidates"]?[0]?["content"]?["parts"]?[0]?["text"]?.GetValue<string>();
+    }
+    
     /// <summary>
     /// Parses the response text and returns the response object.
     /// </summary>

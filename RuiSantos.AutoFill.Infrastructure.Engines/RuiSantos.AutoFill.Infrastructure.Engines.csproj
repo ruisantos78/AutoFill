@@ -20,9 +20,8 @@
     <ItemGroup>
       <ProjectReference Include="..\RuiSantos.AutoFill.Domain\RuiSantos.AutoFill.Domain.csproj" />
     </ItemGroup>
-
+    
     <ItemGroup>
-      <EmbeddedResource Include="Resources\Prompts\DetectFieldsAndValues" />
+      <EmbeddedResource Include="Resources\Prompts\**\*" />
     </ItemGroup>
-
 </Project>

@@ -1,0 +1,38 @@
+{
+    "candidates": [
+        {
+            "content": {
+                "parts": [
+                    {
+                        "text": "```markdown\nPOWER OF ATTORNEY \"AD ET EXTRA JUDICIA\"\n\nJoão Carlos Silva Oliveira, Brazilian, single, holder of RG 12.345.678-9 and\nregistered with CPF 123.456.789–10,\nformer student of the Systems Analysis course at this institution UNIP,\nregistration 987.65–4, residing at Rua\ndas Flores, No. 123 2nd floor Apt 201, Lisbon, PORTUGAL, ZIP 1000-001, by this\nPOWER OF ATTORNEY instrument, appoints\nand constitutes his lawyer and attorney MARIA FERNANDA PEREIRA, Brazilian, single,\nlawyer regularly\nregistered with OAB/SP under No. 654.321, with an office located at Avenida\nCentral, No. 456, Centro, in this city of\nCampinas/SP, ZIP: 13000-000 to whom broad powers are conferred for the general\nforum, with the clause \"Ad et Extra Judicia\",\nin any Court, Instance or Tribunal, as well as public and private institutions,\nbeing able to propose against those\nright the competent actions and defend them in the contrary, following one another\nuntil the final decision, using the\nlegal resources and accompanying them, conferring special powers to confess,\ndesist, settle, sign\ncommitments or agreements, receive and give discharge, substitute with or without\nreservation of equal powers, in short, practice\nall acts necessary for the good and faithful fulfillment of the present,\nconsidering everything good, firm and valuable, and,\nespecially to represent him before UNIP (Universidade Paulista) for the withdrawal\nof any original documents\nrelated to his course and its completion, especially a) Complete program content of\nthe Systems Analysis course\nfor the period from 2005 to 2009; b) Document attesting to the veracity of the\nprogram content for the purpose of\napostille.\n\nCampinas, January 31, 2025.\n\nJoão Carlos Silva Oliveira\nCPF 123.456.789-10\n```"
+                    }
+                ],
+                "role": "model"
+            },
+            "finishReason": "STOP",
+            "avgLogprobs": -0.00039855553719141931
+        }
+    ],
+    "usageMetadata": {
+        "promptTokenCount": 1312,
+        "candidatesTokenCount": 471,
+        "totalTokenCount": 1783,
+        "promptTokensDetails": [
+            {
+                "modality": "DOCUMENT",
+                "tokenCount": 1290
+            },
+            {
+                "modality": "TEXT",
+                "tokenCount": 22
+            }
+        ],
+        "candidatesTokensDetails": [
+            {
+                "modality": "TEXT",
+                "tokenCount": 471
+            }
+        ]
+    },
+    "modelVersion": "gemini-2.0-flash"
+}

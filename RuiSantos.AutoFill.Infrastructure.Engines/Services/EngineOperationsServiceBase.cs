@@ -38,7 +38,7 @@ public abstract class EngineOperationsServiceBase<TSettings>(
             logger.LogInformation("Sending document text to {ModelName} for field and value detection.",
                 Settings.ModelName);
 
-            var prompt = await PromptFactory.GetDetectFieldsAndValuesAsync(documentText);
+            var prompt = await PromptFactory.DetectFieldsAndValuesAsync(documentText);
 
             var detectedFields = await engine.ExecutePromptAsync<DetectedFieldResponse[]>(prompt);
             return detectedFields?.Select(f => f.ToDomain()).ToList() ?? [];
@@ -57,8 +57,22 @@ public abstract class EngineOperationsServiceBase<TSettings>(
     /// </summary>
     /// <param name="fileName">The name of the file to convert.</param>
     /// <returns>A task representing the asynchronous operation.</returns>
-    public Task<string> ConvertDocumentToMarkdownAsync(string fileName)
+    public async Task<string> ConvertDocumentToMarkdownAsync(string fileName)
     {
-        throw new NotImplementedException();
+        try
+        {
+            logger.LogInformation("Sending document text to {ModelName} for convert to markdown.", 
+                Settings.ModelName);
+
+            var prompt = await PromptFactory.ConvertDocumentToMarkdownAsync();
+            
+            return await engine.UploadFileAndExecuteAsync(prompt, fileName);
+        }
+        catch (Exception e)
+        {
+            logger.LogError(e, "Error converting document to markdown with {ModelName}", 
+                Settings.ModelName);
+            throw;
+        }
     }
 }
