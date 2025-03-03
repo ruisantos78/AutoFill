@@ -1,0 +1,19 @@
+Analise o texto do documento abaixo e identifique todas as informações variáveis que mudariam em diferentes instâncias deste documento. 
+Para cada informação variável:
+
+1. Extraia o valor atual
+2. Sugira um nome de campo (em snake_case)
+3. Forneça um rótulo legível por humanos (em Title Case)
+
+Responda APENAS com o array JSON válido no formato exato abaixo, sem texto introdutório ou explicativo. 
+Não inclua comentários, explicações ou qualquer texto que não seja o próprio JSON.
+
+[
+  {
+    "value": "valor extraído",
+    "field_name": "nome_do_campo",
+    "label": "Nome do Campo"
+  }
+]
+
+DOCUMENTO:

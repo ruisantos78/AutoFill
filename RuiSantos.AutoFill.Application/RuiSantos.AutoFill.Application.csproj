@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\RuiSantos.AutoFill.Domain\RuiSantos.AutoFill.Domain.csproj" />
+      <ProjectReference Include="..\RuiSantos.AutoFill.Infrastructure.Engines\RuiSantos.AutoFill.Infrastructure.Engines.csproj" />
+      <ProjectReference Include="..\RuiSantos.AutoFill.Infrastructure.Repositories\RuiSantos.AutoFill.Infrastructure.Repositories.csproj" />
+    </ItemGroup>
+
+</Project>

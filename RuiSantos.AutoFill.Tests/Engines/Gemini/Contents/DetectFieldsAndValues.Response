@@ -1,0 +1,34 @@
+{
+   "candidates": [
+       {
+           "content": {
+               "parts": [
+                   {
+                       "text": "```json\n[\n  {\n    \"value\": \"João Carlos Silva Oliveira\",\n    \"field_name\": \"grantor_name\",\n    \"label\": \"Grantor Name\"\n  },\n  {\n    \"value\": \"Brasileiro\",\n    \"field_name\": \"grantor_nationality\",\n    \"label\": \"Grantor Nationality\"\n  },\n  {\n    \"value\": \"solteiro\",\n    \"field_name\": \"grantor_marital_status\",\n    \"label\": \"Grantor Marital Status\"\n  },\n  {\n    \"value\": \"12.345.678-9\",\n    \"field_name\": \"grantor_rg\",\n    \"label\": \"Grantor Rg\"\n  },\n  {\n    \"value\": \"123.456.789-10\",\n    \"field_name\": \"grantor_cpf\",\n    \"label\": \"Grantor Cpf\"\n  },\n  {\n    \"value\": \"Análise de Sistemas\",\n    \"field_name\": \"course_name\",\n    \"label\": \"Course Name\"\n  },\n  {\n    \"value\": \"UNIP\",\n    \"field_name\": \"institution_name\",\n    \"label\": \"Institution Name\"\n  },\n  {\n    \"value\": \"987.65-4\",\n    \"field_name\": \"grantor_registration_number\",\n    \"label\": \"Grantor Registration Number\"\n  },\n  {\n    \"value\": \"Rua das Flores, N° 123 - 2° andar Apto 201\",\n    \"field_name\": \"grantor_address\",\n    \"label\": \"Grantor Address\"\n  },\n  {\n    \"value\": \"Lisboa\",\n    \"field_name\": \"grantor_city\",\n    \"label\": \"Grantor City\"\n  },\n  {\n    \"value\": \"PORTUGAL\",\n    \"field_name\": \"grantor_country\",\n    \"label\": \"Grantor Country\"\n  },\n  {\n    \"value\": \"1000-001\",\n    \"field_name\": \"grantor_zip_code\",\n    \"label\": \"Grantor Zip Code\"\n  },\n  {\n    \"value\": \"MARIA FERNANDA PEREIRA\",\n    \"field_name\": \"attorney_name\",\n    \"label\": \"Attorney Name\"\n  },\n  {\n    \"value\": \"brasileira\",\n    \"field_name\": \"attorney_nationality\",\n    \"label\": \"Attorney Nationality\"\n  },\n  {\n    \"value\": \"solteira\",\n    \"field_name\": \"attorney_marital_status\",\n    \"label\": \"Attorney Marital Status\"\n  },\n  {\n    \"value\": \"654.321\",\n    \"field_name\": \"attorney_oab_number\",\n    \"label\": \"Attorney Oab Number\"\n  },\n  {\n    \"value\": \"Avenida Central, n° 456, Centro\",\n    \"field_name\": \"attorney_address\",\n    \"label\": \"Attorney Address\"\n  },\n  {\n    \"value\": \"Campinas/SP\",\n    \"field_name\": \"attorney_city\",\n    \"label\": \"Attorney City\"\n  },\n  {\n    \"value\": \"13000-000\",\n    \"field_name\": \"attorney_zip_code\",\n    \"label\": \"Attorney Zip Code\"\n  },\n    {\n    \"value\": \"Análise de \\nSistemas\",\n    \"field_name\": \"course_name_specific\",\n    \"label\": \"Course Name Specific\"\n  },\n  {\n    \"value\": \"2005 a 2009\",\n    \"field_name\": \"course_period\",\n    \"label\": \"Course Period\"\n  },\n  {\n    \"value\": \"31 de Janeiro de 2025\",\n    \"field_name\": \"document_date\",\n    \"label\": \"Document Date\"\n  }\n]\n```"
+                   }
+               ],
+               "role": "model"
+           },
+           "finishReason": "STOP",
+           "avgLogprobs": -0.012343785182182035
+       }
+   ],
+   "usageMetadata": {
+       "promptTokenCount": 705,
+       "candidatesTokenCount": 965,
+       "totalTokenCount": 1670,
+       "promptTokensDetails": [
+           {
+               "modality": "TEXT",
+               "tokenCount": 705
+           }
+       ],
+       "candidatesTokensDetails": [
+           {
+               "modality": "TEXT",
+               "tokenCount": 965
+           }
+       ]
+   },
+   "modelVersion": "gemini-2.0-flash"
+}
