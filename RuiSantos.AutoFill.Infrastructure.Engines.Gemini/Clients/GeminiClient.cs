@@ -63,10 +63,12 @@ public class GeminiClient(
     /// </summary>
     /// <param name="prompt">The prompt to be executed.</param>
     /// <param name="fileName">The file to be uploaded.</param>
+    /// <param name="stream"></param>
     /// <returns>A task that represents the asynchronous operation, containing the response as a string.</returns>
-    public override async Task<string> UploadFileAndExecuteAsync(string prompt, string fileName)
+    public override async Task<string> UploadFileAndExecuteAsync(string prompt, string fileName, Stream stream)
     {
-        var fileBytes= await File.ReadAllBytesAsync(fileName); 
+        await using var memoryStream = new MemoryStream();
+        await stream.CopyToAsync(memoryStream);
         
         var request = new
         {
@@ -85,7 +87,7 @@ public class GeminiClient(
                             inline_data = new
                             {
                                 mime_type = MimeTypes.GetMimeType(fileName),
-                                data = Convert.ToBase64String(fileBytes)
+                                data = Convert.ToBase64String(memoryStream.ToArray())
                             }
                         }
                     }

@@ -1,5 +1,4 @@
 using Microsoft.Extensions.Logging;
-using RuiSantos.AutoFill.Application.Core;
 using RuiSantos.AutoFill.Application.Exceptions;
 using RuiSantos.AutoFill.Application.Factories;
 using RuiSantos.AutoFill.Domain.Entities;
@@ -20,39 +19,37 @@ internal class GenerateTemplateService(
     ILogger<GenerateTemplateService> logger)
     : IGenerateTemplateService
 {
-    public async Task<TemplateDocument> ExtractFromFileAsync(string filePath)
+    public async Task<TemplateDocument> ExtractFromFileAsync(string fileName, Stream stream)
     {
-        logger.LogInformation("Uploading file {filePath}", filePath);
+        logger.LogInformation("Uploading file {fileName}", fileName);
         try
         {
-            Asserts.ValidateFileExists(filePath);
-            
-            var markdown = await ConvertFileToMarkdownAsync(filePath);
+            var markdown = await ConvertFileToMarkdownAsync(fileName, stream);
             var fields = await DetectFieldsAsync(markdown);
-            var template = await CreateAndStoreTemplateAsync(filePath, markdown, fields);
+            var template = await CreateAndStoreTemplateAsync(fileName, markdown, fields);
             
             logger.LogDebug("Template {templateName} uploaded successfully", template.Name);
             return template;        
         }
         catch (ApplicationServiceException exception)
         {
-            logger.LogWarning(exception, "Was not possible to uploading file {filePath} due: {message}", filePath, exception.Message);
+            logger.LogWarning(exception, "Was not possible to uploading file {fileName} due: {message}", fileName, exception.Message);
             throw;
         }
         catch (Exception exception)
         {
-            logger.LogError(exception, "Error uploading file {filePath}", filePath);
+            logger.LogError(exception, "Error uploading file {fileName}", fileName);
             throw ExceptionsFactory.UnexpectedError(exception);
         }
     }
     
-    private async Task<string> ConvertFileToMarkdownAsync(string filePath)
+    private async Task<string> ConvertFileToMarkdownAsync(string fileName, Stream stream)
     {
-        logger.LogDebug("Converting file {filePath} to markdown", filePath);
+        logger.LogDebug("Converting file {fileName} to markdown", fileName);
         
-        var markdown = await engineOperationsService.ConvertDocumentToMarkdownAsync(filePath);
+        var markdown = await engineOperationsService.ConvertDocumentToMarkdownAsync(fileName, stream);
         if (string.IsNullOrWhiteSpace(markdown))
-            throw ExceptionsFactory.MarkdownConversionFailed(filePath);
+            throw ExceptionsFactory.MarkdownConversionFailed(fileName);
         
         return markdown;
     }

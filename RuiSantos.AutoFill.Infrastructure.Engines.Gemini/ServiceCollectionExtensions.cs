@@ -19,28 +19,26 @@ public static class ServiceCollectionExtensions
     /// Registers the Gemini engine services with the specified <see cref="IServiceCollection"/>.
     /// </summary>
     /// <param name="services">The service collection to add the services to.</param>
-    /// <param name="options">The configuration to bind the Gemini settings from.</param>
+    /// <param name="configurations">The configuration options for the Gemini engine.</param>
     /// <returns>The updated service collection.</returns>
-    /// <remarks>
-    /// This method synchronously invokes the provided options function to retrieve the <see cref="GeminiSettings"/>.
-    /// It then registers the necessary services for the Gemini engine, including the <see cref="GeminiClient"/> and <see cref="GeminiOperationsService"/>.
-    /// </remarks>
-    public static IServiceCollection UseGeminiEngine(this IServiceCollection services, Func<Task<GeminiSettings>> options)
+    public static IServiceCollection UseGeminiEngine(this IServiceCollection services, Action<GeminiSettings> configurations)
     {
-        var geminiSettings = options.Invoke().GetAwaiter().GetResult();
-        return services.UseGeminiEngine(geminiSettings);
+        var settings = new GeminiSettings();
+        configurations(settings);
+        
+        return services.UseGeminiEngine(settings);
     }
     
     /// <summary>
-    /// Registers the Gemini engine services with the specified <see cref="IServiceCollection"/>.
+    /// Registers the Gemini engine services with the specified <see cref="IServiceCollection"/> and <see cref="GeminiSettings"/>.
     /// </summary>
     /// <param name="services">The service collection to add the services to.</param>
-    /// <param name="options">The configuration options for the Gemini engine.</param>
+    /// <param name="settings">The configuration settings for the Gemini engine.</param>
     /// <returns>The updated service collection.</returns>
-    public static IServiceCollection UseGeminiEngine(this IServiceCollection services, GeminiSettings options)
+    public static IServiceCollection UseGeminiEngine(this IServiceCollection services, GeminiSettings settings)
     {
         return services.UseEngine<GeminiClient>()
-            .AddSingleton(Options.Create(options))
+            .AddSingleton(Options.Create(settings))
             .AddScoped<IEngineOperationsService, GeminiOperationsService>();
     }
 }

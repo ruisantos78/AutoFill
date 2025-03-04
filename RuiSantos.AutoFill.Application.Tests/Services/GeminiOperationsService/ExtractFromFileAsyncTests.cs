@@ -21,9 +21,11 @@ public class ExtractFromFileAsyncTests(ServiceProviderFixture provider, ITestOut
         var executionTime = DateTime.Now;
         
         var filePath = Path.Combine(Environment.CurrentDirectory, "Resources", "Files", "Sample.pdf");
+        var fileName = Path.GetFileName(filePath);
+        await using var fileStream = File.OpenRead(filePath);
         
         // Act
-        var template = await _service.ExtractFromFileAsync(filePath);
+        var template = await _service.ExtractFromFileAsync(fileName, fileStream);
         
         // Assert
         Assert.NotNull(template);
@@ -46,42 +48,22 @@ public class ExtractFromFileAsyncTests(ServiceProviderFixture provider, ITestOut
         // Output
         output.WriteLine(template.Content);
     }
-
-    [Fact(DisplayName = "ExtractFromFileAsync with invalid file path should throw exception")]
-    public async Task ExtractFromFileAsync_InvalidFilePath_ShouldThrowException()
-    {
-        // Arrange
-        var filePath = Path.Combine(Environment.CurrentDirectory, "Resources", "Files", "InvalidFile.ext");
-        var documentName = Path.GetFileNameWithoutExtension(filePath);
-        
-        var expectedMessage = $"The file {filePath} was not found.";
-        
-        // Act
-        var exception = await Assert.ThrowsAsync<ApplicationServiceException>(async () => 
-            await _service.ExtractFromFileAsync(filePath));
-        
-        // Assert
-        Assert.NotNull(exception);
-        Assert.Equal(ErrorCodes.FileNotFound, exception.ErrorCode);
-        Assert.Equal("ValidateFileExists", exception.Action);
-        Assert.Equal(expectedMessage, exception.Message);
-        
-        var records = await _dataContext.FindAllAsync<TemplateDocumentMapper>(x => x.Name == documentName);
-        Assert.Empty(records);
-    }
-
+    
     [Fact(DisplayName = "ExtractFromFileAsync when conversion failed should throw exception")]
     public async Task ExtractFromFileAsync_WhenConversionFailed_ShouldThrowException()
     {
         // Arrange
         var filePath = Path.Combine(Environment.CurrentDirectory, "Resources", "Files", "Empty.txt");
+        var fileName = Path.GetFileName(filePath);
+        await using var fileStream = File.OpenRead(filePath);
+        
         var documentName = Path.GetFileNameWithoutExtension(filePath);
         
-        var expectedMessage = $"The conversion of the file {filePath} to Markdown failed.";
+        var expectedMessage = $"The conversion of the file {fileName} to Markdown failed.";
         
         // Act
         var exception = await Assert.ThrowsAsync<ApplicationServiceException>(async () => 
-            await _service.ExtractFromFileAsync(filePath));
+            await _service.ExtractFromFileAsync(fileName, fileStream));
         
         // Assert
         Assert.NotNull(exception);
@@ -98,11 +80,14 @@ public class ExtractFromFileAsyncTests(ServiceProviderFixture provider, ITestOut
     {
         // Arrange
         var filePath = Path.Combine(Environment.CurrentDirectory, "Resources", "Files", "NonFields.pdf");
+        var fileName = Path.GetFileName(filePath);
+        await using var fileStream = File.OpenRead(filePath);
+        
         var documentName = Path.GetFileNameWithoutExtension(filePath);
        
         // Act
         var exception = await Assert.ThrowsAsync<ApplicationServiceException>(async () => 
-            await _service.ExtractFromFileAsync(filePath));
+            await _service.ExtractFromFileAsync(fileName, fileStream));
         
         // Assert
         Assert.NotNull(exception);

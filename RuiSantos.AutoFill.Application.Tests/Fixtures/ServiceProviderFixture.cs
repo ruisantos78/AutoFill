@@ -1,3 +1,4 @@
+using LiteDB;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -17,15 +18,13 @@ public sealed class ServiceProviderFixture : IDisposable
 
     public ServiceProviderFixture()
     {
-        const string connectionString = "Filename=:memory:";
-        
         var configuration = ConfigurationFactory.Create();
         var geminiSettings = configuration.GetSection("Engine:Gemini").Get<GeminiSettings>() ?? new GeminiSettings();
 
         _provider = new ServiceCollection()
             .AddLogging(loggingBuilder => loggingBuilder.AddDebug())
             .UseAutoFill()
-            .UseLiteDb(connectionString)
+            .UseLiteDb(new ConnectionString("Filename=:memory:"))
             .UseGeminiEngine(geminiSettings)
             .BuildServiceProvider();
 

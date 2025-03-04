@@ -22,10 +22,11 @@ public class GeminiOperationsService(
     /// Converts a document to Markdown format.
     /// </summary>
     /// <param name="fileName">The name of the file to convert.</param>
+    /// <param name="stream">The data to be converted.</param>
     /// <returns>A task that represents the asynchronous operation. The task result contains the converted Markdown string.</returns>
-    public override async Task<string> ConvertDocumentToMarkdownAsync(string fileName)
+    public override async Task<string> ConvertDocumentToMarkdownAsync(string fileName, Stream stream)
     {
-        var response = await base.ConvertDocumentToMarkdownAsync(fileName);
+        var response = await base.ConvertDocumentToMarkdownAsync(fileName, stream);
 
         response = response.Trim();
         if (response.StartsWith("```markdown\n") && response.EndsWith("```"))
