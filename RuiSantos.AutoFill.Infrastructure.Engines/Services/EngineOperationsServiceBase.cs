@@ -31,7 +31,7 @@ public abstract class EngineOperationsServiceBase<TSettings>(
     /// </summary>
     /// <param name="documentText">The text of the document to analyze.</param>
     /// <returns>A list of detected fields and their values.</returns>
-    public virtual async Task<List<DetectedField>> DetectFieldsAndValuesAsync(string documentText)
+    public virtual async Task<List<TemplateField>> DetectFieldsAndValuesAsync(string documentText)
     {
         try
         {

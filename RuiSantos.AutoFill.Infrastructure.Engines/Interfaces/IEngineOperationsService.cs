@@ -12,7 +12,7 @@ public interface IEngineOperationsService
     /// </summary>
     /// <param name="documentText">The text of the document to analyze.</param>
     /// <returns>A task that represents the asynchronous operation. The task result contains a list of detected fields.</returns>
-    Task<List<DetectedField>> DetectFieldsAndValuesAsync(string documentText);
+    Task<List<TemplateField>> DetectFieldsAndValuesAsync(string documentText);
 
     /// <summary>
     /// Converts the provided document to Markdown format.

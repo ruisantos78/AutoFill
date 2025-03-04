@@ -1,1 +1,9 @@
 Convert this PDF into a well-formatted markdown document. Maintain the original structure and formatting as much as possible.
+If, for any reason, the conversion is not possible, return a short explantion starting if the the sentence "Is not possible to convert this file to markdown due".
+
+Return only the markdown content, without any additional text or explanation inside a markdown code block.
+Example:
+```markdown
+# Title of the Document
+```
+

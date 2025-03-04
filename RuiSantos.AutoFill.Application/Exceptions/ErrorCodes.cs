@@ -5,6 +5,11 @@ namespace RuiSantos.AutoFill.Application.Exceptions;
 /// </summary>
 public static class ErrorCodes
 {
+   /// <summary>
+   /// Error code indicating an unexpected error.
+   /// </summary>
+   public const int UnexpectedError = -1;
+    
     /// <summary>
     /// Error code indicating that fields are not detected by the engine.
     /// </summary>

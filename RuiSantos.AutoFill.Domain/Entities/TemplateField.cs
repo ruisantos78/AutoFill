@@ -6,7 +6,7 @@ namespace RuiSantos.AutoFill.Domain.Entities;
 /// <param name="Value">The value of the detected field.</param>
 /// <param name="FieldName">The name of the field.</param>
 /// <param name="Label">The label associated with the field.</param>
-public record DetectedField(
+public record TemplateField(
     string Value,
     string FieldName,
     string Label

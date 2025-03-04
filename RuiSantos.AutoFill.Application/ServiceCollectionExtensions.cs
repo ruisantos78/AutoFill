@@ -20,8 +20,8 @@ public static class ServiceCollectionExtensions
     /// <returns>The IServiceCollection with the registered services.</returns>
     public static IServiceCollection UseAutoFill(this IServiceCollection services)
     {
-        // Register the field detection service
-        services.AddScoped<ITemplateManagerService, TemplateManagerService>();
+        // Register services
+        services.AddScoped<IGenerateTemplateService, GenerateTemplateService>();
         
         return services;
     }

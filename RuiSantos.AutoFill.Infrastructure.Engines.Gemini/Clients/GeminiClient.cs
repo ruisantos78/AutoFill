@@ -1,5 +1,6 @@
 using System.Net;
 using System.Text.Json.Nodes;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using MimeKit;
 using RuiSantos.AutoFill.Infrastructure.Engines.Clients;
@@ -11,7 +12,10 @@ namespace RuiSantos.AutoFill.Infrastructure.Engines.Gemini.Clients;
 /// </summary>
 /// <param name="options">The settings for the Gemini client.</param>
 /// <param name="httpClientFactory">The factory to create HTTP clients.</param>
-public class GeminiClient(IOptions<GeminiSettings> options, IHttpClientFactory httpClientFactory) 
+public class GeminiClient(
+    IOptions<GeminiSettings> options, 
+    IHttpClientFactory httpClientFactory,
+    ILogger<GeminiClient> logger)
     : EngineClientBase<GeminiSettings>(options, httpClientFactory)
 {
     /// <summary>
@@ -44,7 +48,10 @@ public class GeminiClient(IOptions<GeminiSettings> options, IHttpClientFactory h
             }
         };
         
+        logger.LogTrace("Request: {Request}", request);
         var response = await client.PostAsync($"/models/{settings.ModelName}?key={settings.ApiKey}", request);
+        logger.LogTrace("Response: {Response}", response);
+        
         if (HasErrors(response, out var errorMessage))
             throw new Exception(errorMessage);
 
@@ -91,7 +98,10 @@ public class GeminiClient(IOptions<GeminiSettings> options, IHttpClientFactory h
             }
         };
         
+        logger.LogTrace("Request: {Request}", request);
         var response = await client.PostAsync($"/models/{settings.ModelName}?key={settings.ApiKey}", request);
+        logger.LogTrace("Response: {Response}", response);
+        
         if (HasErrors(response, out var errorMessage))
             throw new Exception(errorMessage);
 

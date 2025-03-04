@@ -27,12 +27,12 @@ internal class DetectedFieldResponse
     public required string Label { get; init; }
 
     /// <summary>
-    /// Converts the detected field response to the domain entity <see cref="DetectedField"/>.
+    /// Converts the detected field response to the domain entity <see cref="TemplateField"/>.
     /// </summary>
-    /// <returns>An instance of <see cref="DetectedField"/>.</returns>
-    public DetectedField ToDomain()
+    /// <returns>An instance of <see cref="TemplateField"/>.</returns>
+    public TemplateField ToDomain()
     {
-        return new DetectedField(
+        return new TemplateField(
             this.Value,
             this.FieldName,
             this.Label

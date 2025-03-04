@@ -3,53 +3,50 @@ using CommunityToolkit.Maui.Storage;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
-using RuiSantos.AutoFill.App.Services;
+using RuiSantos.AutoFill.Application.Exceptions;
+using RuiSantos.AutoFill.Domain.Interfaces;
 
 namespace RuiSantos.AutoFill.App.ViewModels;
 
 public partial class MainViewModel(
     IMessenger messenger,
-    ITemplateServices templateServices
-) : ObservableRecipient, 
-    IRecipient<UploadTemplateDocumentCompleted>,
-    IRecipient<UploadTemplateDocumentFail>
+    IGenerateTemplateService generateTemplateServices
+) : ObservableRecipient
 {
-    [ObservableProperty] string _geminiApiKey = string.Empty;
-    
-    partial void OnGeminiApiKeyChanged(string value)
-    {
-        Preferences.Set("Engine:Gemini:ApiKey", value);
-    }
-    
-    [RelayCommand]
-    private async Task UploadFileAsync()
-    {
-        var folderResult = await FolderPicker.Default.PickAsync();
-        if (folderResult.Folder is not null)
-        {
-            var fileName = Directory.GetFiles(folderResult.Folder.Path, "*.pdf").FirstOrDefault();
-            if (fileName is null)
-                return;
-            
-            await templateServices.UploadFileAsync(fileName);
-        }
-    }
-
     protected override void OnActivated()
     {
         messenger.RegisterAll(this);
     }
 
-    public void Receive(UploadTemplateDocumentCompleted message)
+    [RelayCommand]
+    private async Task UploadFileAsync()
     {
-        if (message.Value is null)
-            return; 
-        
-        Snackbar.Make($"Template {message.Value.Name} uploaded successfully").Show();
+        var folderResult = await FolderPicker.Default.PickAsync();
+        if (folderResult.Folder is null)
+            return;
+
+        var fileName = Directory.GetFiles(folderResult.Folder.Path, "*.pdf").FirstOrDefault();
+        if (fileName is null)
+            return;
+
+        await GenerateNewTemplateFromFileAsync(fileName);
     }
 
-    public void Receive(UploadTemplateDocumentFail message)
+    private async Task GenerateNewTemplateFromFileAsync(string fileName)
     {
-        Snackbar.Make(message.Value).Show();
+        try
+        {
+            var template = await generateTemplateServices.ExtractFromFileAsync(fileName);
+            await Snackbar.Make($"Template {template.Name} uploaded successfully").Show();
+        }
+        catch (ApplicationServiceException tsex)
+        {
+            await Snackbar.Make(tsex.Message).Show();
+        }
+        catch (Exception ex)
+        {
+            await Snackbar.Make(ex.Message).Show();
+            throw;
+        }
     }
 }

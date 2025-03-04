@@ -27,11 +27,11 @@ internal class TemplateFieldsMapper
     public string Label { get; init; } = string.Empty;
 
     /// <summary>
-    /// Converts the current instance to a <see cref="DetectedField"/> domain object.
+    /// Converts the current instance to a <see cref="TemplateField"/> domain object.
     /// </summary>
-    /// <returns>A <see cref="DetectedField"/> object.</returns>
-    public DetectedField ToDomain()
+    /// <returns>A <see cref="TemplateField"/> object.</returns>
+    public TemplateField ToDomain()
     {
-        return new DetectedField(Value, Name, Label);
+        return new TemplateField(Value, Name, Label);
     }
 }

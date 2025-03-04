@@ -27,8 +27,9 @@ public class GeminiOperationsService(
     {
         var response = await base.ConvertDocumentToMarkdownAsync(fileName);
 
+        response = response.Trim();
         if (response.StartsWith("```markdown\n") && response.EndsWith("```"))
-            return response[12..^3].TrimEnd();
+            return response[12..^3];
 
         return string.Empty;
     }

@@ -1,7 +1,6 @@
 ﻿using CommunityToolkit.Maui;
 using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Extensions.Logging;
-using RuiSantos.AutoFill.App.Services;
 using RuiSantos.AutoFill.App.UI.Pages;
 using RuiSantos.AutoFill.App.ViewModels;
 using RuiSantos.AutoFill.Application;
@@ -30,36 +29,27 @@ public static class MauiProgram
             });
         
         builder.Services
-            .UseLiteDb(GetDatabaseFile)
-            .UseGeminiEngine(GetEngineSettings)
+            .UseLiteDb(Path.Combine(FileSystem.AppDataDirectory, "RuiSantos.AutoFill.db"))
+            .UseGeminiEngine(async () => new GeminiSettings
+            {
+                ApiKey = await SecureStorage.Default.GetAsync("GeminiApiKey") ?? "test_mode"
+            })
             .UseAutoFill()
             .UseAutoFillApp();
         
 #if DEBUG
         builder.Logging.AddDebug();
 #endif
-
+        
         return builder.Build();
-        
-        string GetDatabaseFile()
-        {
-            var databaseFile = Path.Combine(FileSystem.AppDataDirectory, "RuiSantos.AutoFill.db");
-            return databaseFile;
-        }
-        
-        async Task<GeminiSettings> GetEngineSettings()
-        {
-            var engineToken = await SecureStorage.Default.GetAsync("GeminiApiKey");
-            return new GeminiSettings() { ApiKey = engineToken ?? "test_mode" };
-        }
     }
     
     private static IServiceCollection UseAutoFillApp(this IServiceCollection services)
     {
         // Services
         services
-            .AddSingleton<IMessenger>(WeakReferenceMessenger.Default)
-            .AddSingleton<ITemplateServices, TemplateServices>();
+            .AddSingleton<IMessenger>(WeakReferenceMessenger.Default);
+            
         
         // ViewModels
         services

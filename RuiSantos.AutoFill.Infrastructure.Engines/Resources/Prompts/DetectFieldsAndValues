@@ -16,4 +16,13 @@ Do not include comments, explanations, or any text other than the JSON itself.
   }
 ]
 
+The data we want to extract is in the following
+- Personal Information
+- Addresses
+- Company Information
+- Date, time and location
+- Any other highly sensitive information
+
+In case of not be able to extract any relevant information, return an empty JSON array.
+
 DOCUMENT:
