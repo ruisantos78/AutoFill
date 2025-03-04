@@ -8,15 +8,15 @@ public abstract class EngineSettingsBase
     /// <summary>
     /// Gets the model name.
     /// </summary>
-    public string ModelName { get; init; } = string.Empty;
+    public string ModelName { get; set; } = string.Empty;
 
     /// <summary>
     /// Gets the base URL.
     /// </summary>
-    public string BaseUrl { get; init; } = string.Empty;
+    public string BaseUrl { get; set; } = string.Empty;
 
     /// <summary>
     /// Gets the temperature setting.
     /// </summary>
-    public decimal Temperature { get; init; }
+    public decimal Temperature { get; set; }
 }

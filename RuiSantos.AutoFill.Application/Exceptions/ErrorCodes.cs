@@ -5,23 +5,19 @@ namespace RuiSantos.AutoFill.Application.Exceptions;
 /// </summary>
 public static class ErrorCodes
 {
-   /// <summary>
-   /// Error code indicating an unexpected error.
-   /// </summary>
-   public const int UnexpectedError = -1;
+    /// <summary>
+    /// Error code indicating an unexpected error.
+    /// </summary>
+    public const int UnexpectedError = -1;
+
     
     /// <summary>
     /// Error code indicating that fields are not detected by the engine.
     /// </summary>
     public const int FieldAreNotDetectByEngine = 1;
-    
-    /// <summary>
-    /// Error code indicating that the file was not found.
-    /// </summary>
-    public const int FileNotFound = 2;
-    
+
     /// <summary>
     /// Error code indicating that the Markdown conversion failed.
     /// </summary>
-    public const int MarkdownConversionFailed = 3;
+    public const int MarkdownConversionFailed = 2;
 }

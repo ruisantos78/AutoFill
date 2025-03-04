@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Content Include="..\.dockerignore">
+        <Link>.dockerignore</Link>
+      </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="MudBlazor" Version="8.3.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\RuiSantos.AutoFill.Application\RuiSantos.AutoFill.Application.csproj" />
+      <ProjectReference Include="..\RuiSantos.AutoFill.Infrastructure.Engines.Gemini\RuiSantos.AutoFill.Infrastructure.Engines.Gemini.csproj" />
+      <ProjectReference Include="..\RuiSantos.AutoFill.Infrastructure.Repositories.LiteDb\RuiSantos.AutoFill.Infrastructure.Repositories.LiteDb.csproj" />
+    </ItemGroup>
+
+</Project>

@@ -1,4 +1,6 @@
 using System.Runtime.CompilerServices;
+using LiteDB;
+using LiteDB.Async;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using RuiSantos.AutoFill.Infrastructure.Repositories.Interfaces;
@@ -20,23 +22,26 @@ public static class ServiceCollectionExtensions
     /// Registers LiteDb services and configurations in the <see cref="IServiceCollection"/>.
     /// </summary>
     /// <param name="services">The service collection to add the services to.</param>
-    /// <param name="options">A function that returns the connection string for the LiteDb database.</param>
+    /// <param name="configurations">An action to configure the LiteDb settings.</param>
     /// <returns>The updated service collection.</returns>
-    public static IServiceCollection UseLiteDb(this IServiceCollection services, Func<string> options)
+    public static IServiceCollection UseLiteDb(this IServiceCollection services, Action<ConnectionString> configurations)
     {
-        return services.UseLiteDb(options.Invoke());
+        var settings = new ConnectionString();
+        configurations(settings);
+
+        return services.UseLiteDb(settings);
     }
-    
+
     /// <summary>
     /// Registers LiteDb services and configurations in the <see cref="IServiceCollection"/>.
     /// </summary>
     /// <param name="services">The service collection to add the services to.</param>
-    /// <param name="connectionString">The connection string for the LiteDb database.</param>
+    /// <param name="settings">The LiteDb settings to use.</param>
     /// <returns>The updated service collection.</returns>
-    public static IServiceCollection UseLiteDb(this IServiceCollection services, string connectionString)
+    public static IServiceCollection UseLiteDb(this IServiceCollection services, ConnectionString settings)
     {
         return services.UseRepository<LiteDbContext>()
-            .AddSingleton(Options.Create(new LiteDbSettings(connectionString)))
+            .AddSingleton(Options.Create(settings))
             .AddScoped<ITemplateDocumentRepository, TemplateDocumentRepository>();
     }
 }

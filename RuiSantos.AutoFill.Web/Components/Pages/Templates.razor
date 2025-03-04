@@ -1,0 +1,81 @@
+@page "/Templates"
+@inject TemplateFormsViewModel ViewModel
+
+<MudLayout>
+    <MudAppBar Elevation="1" Color="Color.Primary">
+        <MudText Typo="Typo.h6">AutoFill Forms</MudText>
+        <MudSpacer/>
+        <MudIconButton Icon="@Icons.Material.Filled.AccountCircle" Color="Color.Inherit"/>
+    </MudAppBar>
+
+    <MudMainContent>
+        <MudContainer MaxWidth="MaxWidth.Large" Class="pa-4">
+            <!-- Header area -->
+            <MudGrid>
+                <MudItem xs="12" Class="d-flex align-center">
+                    <MudText Typo="Typo.h4">Forms</MudText>
+                    <MudSpacer/>
+
+                    <!-- Search area -->
+                    <MudTextField T="string"
+                                  Placeholder="Search forms"
+                                  Adornment="Adornment.Start"
+                                  AdornmentIcon="@Icons.Material.Filled.Search"
+                                  Class="ml-auto mr-4" Style="max-width: 400px;"
+                                  Variant="Variant.Outlined" />
+
+                    <!-- Header buttons -->
+                    <MudIconButton Icon="@Icons.Material.Filled.Sort" Color="Color.Secondary"/>
+                    <MudIconButton Icon="@Icons.Material.Filled.ViewList" Color="Color.Secondary"/>
+                </MudItem>
+            </MudGrid>
+
+            <!-- Empty state -->
+            <MudPaper Class="d-flex flex-column align-center justify-center pa-8 mt-4" Elevation="0"
+                      Style="min-height: 300px;">
+                <MudIcon Icon="@Icons.Material.Filled.Description" Color="Color.Secondary" Size="Size.Large"
+                         Class="mb-4" Style="font-size: 100px; opacity: 0.5;"/>
+                <MudText Typo="Typo.h6" Color="Color.Secondary" Align="Align.Center">No forms found</MudText>
+                <MudText Typo="Typo.body1" Color="Color.Secondary" Align="Align.Center" Class="mt-2">Upload a form to
+                    get started
+                </MudText>
+            </MudPaper>
+
+            <!-- Forms list (commented out for simplicity) -->
+            @* 
+            <MudGrid Class="mt-4">
+                @for (int i = 0; i < 3; i++)
+                {
+                    <MudItem xs="12">
+                        <MudCard Elevation="2" Class="rounded-lg">
+                            <MudCardContent>
+                                <div class="d-flex">
+                                    <MudIcon Icon="@Icons.Material.Filled.PictureAsPdf" Color="Color.Error" Size="Size.Large" Class="mr-4" />
+                                    <div class="flex-grow-1" Style="min-width: 0">
+                                        <MudText Typo="Typo.h6">Form Name</MudText>
+                                        <MudText Typo="Typo.body2" Color="Color.Secondary">Form Description</MudText>
+                                        <MudText Typo="Typo.caption" Class="mt-1">Created on 3/3/2025</MudText>
+                                    </div>
+                                    <div class="d-flex flex-column">
+                                        <MudIconButton Icon="@Icons.Material.Filled.Edit" Size="Size.Small" Color="Color.Secondary" />
+                                        <MudIconButton Icon="@Icons.Material.Filled.Delete" Size="Size.Small" Color="Color.Error" />
+                                    </div>
+                                </div>
+                            </MudCardContent>
+                        </MudCard>
+                    </MudItem>
+                }
+            </MudGrid>
+            *@
+
+            <!-- Floating Action Button -->
+            <MudFileUpload T="IBrowserFile" FilesChanged="ViewModel.OnFileUploaded"
+                           Style="position: fixed; right: 24px; bottom: 24px;">
+                <ActivatorContent>
+                    <MudFab Color="Color.Primary"
+                            StartIcon="@Icons.Material.Filled.AttachFile" />
+                </ActivatorContent>
+            </MudFileUpload>
+        </MudContainer>
+    </MudMainContent>
+</MudLayout>

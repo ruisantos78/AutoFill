@@ -32,6 +32,8 @@ public class GenerateTemplateServiceTests
         const string documentName = "Sample";
        
         var filePath = Path.Combine(Environment.CurrentDirectory, "Resources", "Files", "Sample.pdf");
+        var fileName = Path.GetFileName(filePath);
+        await using var fileStream = File.OpenRead(filePath);
         
         IReadOnlyList<TemplateField> fields =
         [
@@ -41,14 +43,14 @@ public class GenerateTemplateServiceTests
         
         TemplateDocument templateDocument = new(Guid.Empty, documentName, markdown, fields.ToArray());
 
-        _engineOperations.ConvertDocumentToMarkdownAsync(filePath)
+        _engineOperations.ConvertDocumentToMarkdownAsync(fileName, fileStream)
             .Returns(markdown);
         
         _engineOperations.DetectFieldsAndValuesAsync(markdown)
             .Returns(fields.ToList());
         
         // Act
-        var result = await _service.ExtractFromFileAsync(filePath);
+        var result = await _service.ExtractFromFileAsync(fileName, fileStream);
 
         // Assert
         Assert.NotNull(result);
@@ -57,38 +59,24 @@ public class GenerateTemplateServiceTests
         
         await _templateDocumentRepository.Received(1).CreateAsync(result);
     }
-
-    [Fact(DisplayName = "ExtractFromFileAsync with invalid file path should throw exception")]
-    public async Task ExtractFromFileAsync_InvalidFilePath_ShouldThrowException()
-    {
-        // Arrange
-        var invalidFilePath = Path.Combine(Environment.CurrentDirectory, "Resources", "Files", "InvalidFile.ext");
-        var expectedMessage = $"The file {invalidFilePath} was not found.";
-        
-        // Act
-        var exception = await Assert.ThrowsAsync<ApplicationServiceException>(async () => 
-            await _service.ExtractFromFileAsync(invalidFilePath));
-
-        // Assert
-        Assert.NotNull(exception);
-        Assert.Equal(ErrorCodes.FileNotFound, exception.ErrorCode);
-        Assert.Equal("ValidateFileExists", exception.Action);
-        Assert.Equal(expectedMessage, exception.Message);
-    }
     
     [Fact(DisplayName = "ExtractFromFileAsync when conversion failed should throw exception")]
     public async Task ExtractFromFileAsync_WhenConversionFailed_ShouldThrowException()
     {
         // Arrange
         var filePath = Path.Combine(Environment.CurrentDirectory, "Resources", "Files", "Sample.pdf");
-        var expectedMessage = $"The conversion of the file {filePath} to Markdown failed.";
+        var fileName = Path.GetFileName(filePath);
+        await using var fileStream = File.OpenRead(filePath);
         
-        _engineOperations.ConvertDocumentToMarkdownAsync(filePath)
+        var expectedMessage = $"The conversion of the file {fileName} to Markdown failed.";
+        
+        
+        _engineOperations.ConvertDocumentToMarkdownAsync(fileName, fileStream)
             .Returns(string.Empty);
         
         // Act
         var exception = await Assert.ThrowsAsync<ApplicationServiceException>(async () => 
-            await _service.ExtractFromFileAsync(filePath));
+            await _service.ExtractFromFileAsync(fileName, fileStream));
 
         // Assert
         Assert.NotNull(exception);
@@ -104,8 +92,10 @@ public class GenerateTemplateServiceTests
         const string expectedMessage = "Fields are not detected by the engine.";
         
         var filePath = Path.Combine(Environment.CurrentDirectory, "Resources", "Files", "Sample.pdf");
+        var fileName = Path.GetFileName(filePath);
+        await using var fileStream = File.OpenRead(filePath);
         
-        _engineOperations.ConvertDocumentToMarkdownAsync(filePath)
+        _engineOperations.ConvertDocumentToMarkdownAsync(fileName, fileStream)
             .Returns("This is a test");
         
         _engineOperations.DetectFieldsAndValuesAsync(Arg.Any<string>())
@@ -113,7 +103,7 @@ public class GenerateTemplateServiceTests
         
         // Act
         var exception = await Assert.ThrowsAsync<ApplicationServiceException>(async () => 
-            await _service.ExtractFromFileAsync(filePath));
+            await _service.ExtractFromFileAsync(fileName, fileStream));
 
         // Assert
         Assert.NotNull(exception);
@@ -129,13 +119,15 @@ public class GenerateTemplateServiceTests
         const string expectedMessage = "An unexpected error occurs.";
         
         var filePath = Path.Combine(Environment.CurrentDirectory, "Resources", "Files", "Sample.pdf");
+        var fileName = Path.GetFileName(filePath);
+        await using var fileStream = File.OpenRead(filePath);
         
-        _engineOperations.ConvertDocumentToMarkdownAsync(filePath)
+        _engineOperations.ConvertDocumentToMarkdownAsync(fileName, fileStream)
             .ThrowsAsync(new InvalidOperationException());
         
         // Act
         var exception = await Assert.ThrowsAsync<ApplicationServiceException>(async () => 
-            await _service.ExtractFromFileAsync(filePath));
+            await _service.ExtractFromFileAsync(fileName, fileStream));
 
         // Assert
         Assert.NotNull(exception);

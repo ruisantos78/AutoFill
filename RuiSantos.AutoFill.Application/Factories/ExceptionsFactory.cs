@@ -11,9 +11,6 @@ internal static class ExceptionsFactory
     public static ApplicationServiceException FieldsAreNotDetectedByEngine([CallerMemberName] string action = "")
         => new(ErrorCodes.FieldAreNotDetectByEngine, action, "Fields are not detected by the engine.");
     
-    public static ApplicationServiceException FileNotFound(string filePath, [CallerMemberName] string action = "")
-        => new(ErrorCodes.FileNotFound, action, $"The file {filePath} was not found.");
-    
     public static ApplicationServiceException MarkdownConversionFailed(string filePath, [CallerMemberName] string action = "")
         => new(ErrorCodes.MarkdownConversionFailed, action, $"The conversion of the file {filePath} to Markdown failed.");
 }

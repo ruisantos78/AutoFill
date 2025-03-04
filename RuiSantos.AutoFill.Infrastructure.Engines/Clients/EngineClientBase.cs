@@ -47,8 +47,9 @@ public abstract class EngineClientBase<TSettings> : IEngineClient
     /// </summary>
     /// <param name="prompt">The prompt to execute.</param>
     /// <param name="fileName">The file to upload.</param>
+    /// <param name="stream"></param>
     /// <returns>A task representing the asynchronous operation, with a string result.</returns>
-    public abstract Task<string> UploadFileAndExecuteAsync(string prompt, string fileName);
+    public abstract Task<string> UploadFileAndExecuteAsync(string prompt, string fileName, Stream stream);
 
     /// <summary>
     /// Determines whether the response contains errors.

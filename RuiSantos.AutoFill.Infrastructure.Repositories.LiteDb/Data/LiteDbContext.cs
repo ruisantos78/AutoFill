@@ -1,4 +1,5 @@
 using System.Linq.Expressions;
+using LiteDB;
 using LiteDB.Async;
 using Microsoft.Extensions.Options;
 using RuiSantos.AutoFill.Infrastructure.Repositories.Interfaces;
@@ -9,9 +10,9 @@ namespace RuiSantos.AutoFill.Infrastructure.Repositories.LiteDb.Data;
 /// Represents the LiteDbContext which provides methods to interact with the LiteDB database.
 /// </summary>
 /// <param name="settings">The LiteDbSettings options.</param>
-internal sealed class LiteDbContext(IOptions<LiteDbSettings> settings) : IDataContext
+internal sealed class LiteDbContext(IOptions<ConnectionString> settings) : IDataContext
 {
-    private readonly ILiteDatabaseAsync _database = new LiteDatabaseAsync(settings.Value.ConnectionString);
+    private readonly ILiteDatabaseAsync _database = new LiteDatabaseAsync(settings.Value);
 
     /// <summary>
     /// Disposes the LiteDbContext and releases all resources.

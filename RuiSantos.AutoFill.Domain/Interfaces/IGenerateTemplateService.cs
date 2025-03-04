@@ -7,5 +7,5 @@ namespace RuiSantos.AutoFill.Domain.Interfaces;
 /// </summary>
 public interface IGenerateTemplateService
 {
-    Task<TemplateDocument> ExtractFromFileAsync(string filePath);  
+    Task<TemplateDocument> ExtractFromFileAsync(string fileName, Stream stream);
 }

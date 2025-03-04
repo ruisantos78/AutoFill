@@ -1,0 +1,10 @@
+﻿@page "/"
+
+<InputFile OnChange="LoadFiles" />
+
+@code {
+    private void LoadFiles(InputFileChangeEventArgs e)
+    {
+        Console.WriteLine(e.File.Name);
+    }
+}

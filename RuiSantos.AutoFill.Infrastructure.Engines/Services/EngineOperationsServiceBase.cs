@@ -56,8 +56,9 @@ public abstract class EngineOperationsServiceBase<TSettings>(
     /// Converts the provided document to Markdown format.
     /// </summary>
     /// <param name="fileName">The name of the file to convert.</param>
+    /// <param name="stream">The stream to the file to convert.</param>
     /// <returns>A task representing the asynchronous operation.</returns>
-    public virtual async Task<string> ConvertDocumentToMarkdownAsync(string fileName)
+    public virtual async Task<string> ConvertDocumentToMarkdownAsync(string fileName, Stream stream)
     {
         try
         {
@@ -66,7 +67,7 @@ public abstract class EngineOperationsServiceBase<TSettings>(
 
             var prompt = await PromptFactory.ConvertDocumentToMarkdownAsync();
             
-            return await engine.UploadFileAndExecuteAsync(prompt, fileName);
+            return await engine.UploadFileAndExecuteAsync(prompt, fileName, stream);
         }
         catch (Exception e)
         {
