@@ -7,20 +7,23 @@
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     </PropertyGroup>
 
-    <ItemGroup>
-      <Content Include="..\.dockerignore">
-        <Link>.dockerignore</Link>
-      </Content>
-    </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="MudBlazor" Version="8.3.0" />
+        <PackageReference Include="MudBlazor" Version="8.*"/>
     </ItemGroup>
+
 
     <ItemGroup>
       <ProjectReference Include="..\RuiSantos.AutoFill.Application\RuiSantos.AutoFill.Application.csproj" />
       <ProjectReference Include="..\RuiSantos.AutoFill.Infrastructure.Engines.Gemini\RuiSantos.AutoFill.Infrastructure.Engines.Gemini.csproj" />
       <ProjectReference Include="..\RuiSantos.AutoFill.Infrastructure.Repositories.LiteDb\RuiSantos.AutoFill.Infrastructure.Repositories.LiteDb.csproj" />
+      <ProjectReference Include="..\RuiSantos.AutoFill.Infrastructure.Repositories.Mongo\RuiSantos.AutoFill.Infrastructure.Repositories.Mongo.csproj" />
     </ItemGroup>
 
+
+    <ItemGroup>
+      <Content Include="..\.dockerignore">
+        <Link>.dockerignore</Link>
+      </Content>
+    </ItemGroup>
 </Project>

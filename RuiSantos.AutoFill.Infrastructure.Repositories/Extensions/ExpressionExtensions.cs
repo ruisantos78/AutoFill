@@ -1,11 +1,11 @@
 using System.Linq.Expressions;
 
-namespace RuiSantos.AutoFill.Infrastructure.Repositories.LiteDb.Extensions;
+namespace RuiSantos.AutoFill.Infrastructure.Repositories.Extensions;
 
 /// <summary>
 /// Provides extension methods for working with expressions.
 /// </summary>
-internal static class ExpressionExtensions
+public static class ExpressionExtensions
 {
     /// <summary>
     /// Converts an expression of type <typeparamref name="TSource"/> to an expression of type <typeparamref name="TDestination"/>.

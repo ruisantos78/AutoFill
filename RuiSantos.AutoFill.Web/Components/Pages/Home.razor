@@ -1,10 +1,20 @@
 ﻿@page "/"
+@inject MainViewModel ViewModel
 
-<InputFile OnChange="LoadFiles" />
+<PageTitle>Home</PageTitle>
 
-@code {
-    private void LoadFiles(InputFileChangeEventArgs e)
+<MudContainer MaxWidth="MaxWidth.Large" Class="pa-4">
+    @foreach (var template in ViewModel.TemplateDocuments)
     {
-        Console.WriteLine(e.File.Name);
+        <div>@template.Name</div>
     }
-}
+    
+    <!-- Floating Action Button -->
+    <MudFileUpload T="IBrowserFile" FilesChanged="ViewModel.UploadTemplateFile"
+                   Style="position: fixed; right: 24px; bottom: 24px;">
+        <ActivatorContent>
+            <MudFab Color="Color.Primary"
+                    StartIcon="@Icons.Material.Filled.AttachFile"/>
+        </ActivatorContent>
+    </MudFileUpload>
+</MudContainer>

@@ -1,38 +1,71 @@
-using LiteDB;
+using Microsoft.AspNetCore.DataProtection;
 using MudBlazor;
 using MudBlazor.Services;
 using RuiSantos.AutoFill.Application;
 using RuiSantos.AutoFill.Infrastructure.Engines.Gemini;
-using RuiSantos.AutoFill.Infrastructure.Repositories.LiteDb;
 using RuiSantos.AutoFill.Web.Components;
-using RuiSantos.AutoFill.Web.ViewModels.Commons;
+using RuiSantos.AutoFill.Web.ViewModels;
+
+#if DEBUG
+using LiteDB;
+using RuiSantos.AutoFill.Infrastructure.Repositories.LiteDb;
+#else
+using MongoDB.Driver;
+using RuiSantos.AutoFill.Infrastructure.Repositories.Mongo;
+#endif
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Add MudBlazor services
+builder.Services.AddMudServices(configuration =>
+{
+    configuration.SnackbarConfiguration.PositionClass = Defaults.Classes.Position.BottomLeft;
+});
+
+builder.Services.AddDataProtection()
+    .SetApplicationName("AutoFill")
+    .UseEphemeralDataProtectionProvider();
+
+// Add AutoFill Services
+builder.Services
+    .UseAutoFill()
+    .UseGeminiEngine(options =>
+    {
+        options.ApiKey = builder.Configuration.GetValue("GEMINI_API_KEY", string.Empty);
+    });
+
+#if DEBUG
+builder.Services.UseLiteDb(options =>
+{
+    options.Filename = ":memory:";
+    options.Connection = ConnectionType.Shared;
+});
+#else
+builder.Services.UseMongoDb(options =>
+{
+    options.Server = new MongoServerAddress(
+        host: builder.Configuration.GetValue("MONGO_SERVER_HOST", string.Empty),
+        port: builder.Configuration.GetValue("MONGO_SERVER_PORT", 27017)
+    );
+
+    // Create credential using the admin database
+    options.Credential = MongoCredential.CreateCredential(
+        databaseName: "admin", // Always authenticate against admin
+        username: builder.Configuration.GetValue("MONGO_USER", "admin"),
+        password: builder.Configuration.GetValue("MONGO_PASSWORD", "securepassword").ToSecureString()
+    );
+
+    // Set database to use after authentication
+    options.ApplicationName = builder.Configuration.GetValue("MONGO_DATABASE", "autofill");
+});
+#endif
+
+
+builder.Services.AddScoped<MainViewModel>();
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
-
-builder.Services.AddMudServices(config =>
-{
-    config.SnackbarConfiguration.PositionClass = Defaults.Classes.Position.BottomLeft;
-    config.SnackbarConfiguration.SnackbarVariant = Variant.Filled;
-    config.SnackbarConfiguration.ShowCloseIcon = true;
-});
-
-// Add AutoFill Services
-builder.Services
-    .AddAllViewModels()
-    .UseAutoFill()
-    .UseLiteDb(options =>
-    {
-        options.Filename = ":memory:";
-        options.Connection = ConnectionType.Shared;
-    })
-    .UseGeminiEngine(options =>
-    {
-        options.ApiKey = Environment.GetEnvironmentVariable("GEMINI_API_KEY") ?? string.Empty;
-    });
 
 var app = builder.Build();
 

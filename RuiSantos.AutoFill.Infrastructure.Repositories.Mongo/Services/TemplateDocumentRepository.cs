@@ -2,9 +2,9 @@ using System.Linq.Expressions;
 using RuiSantos.AutoFill.Domain.Entities;
 using RuiSantos.AutoFill.Infrastructure.Repositories.Extensions;
 using RuiSantos.AutoFill.Infrastructure.Repositories.Interfaces;
-using RuiSantos.AutoFill.Infrastructure.Repositories.LiteDb.Mappings;
+using RuiSantos.AutoFill.Infrastructure.Repositories.Mongo.Mappings;
 
-namespace RuiSantos.AutoFill.Infrastructure.Repositories.LiteDb.Services;
+namespace RuiSantos.AutoFill.Infrastructure.Repositories.Mongo.Services;
 
 /// <summary>
 /// Repository for managing TemplateDocument entities in LiteDb.

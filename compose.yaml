@@ -1,30 +1,39 @@
 ﻿services:
-  blazorapp1:
-    image: blazorapp1
-    build:
-      context: .
-      dockerfile: BlazorApp1/BlazorApp1/Dockerfile
-
-  blazorapp1.client:
-    image: blazorapp1.client
-    build:
-      context: .
-      dockerfile: BlazorApp1/BlazorApp1.Client/Dockerfile
-
-  ruisantos.autofill.web:
+  autofill_web:
     image: ruisantos.autofill.web
     build:
       context: .
-      dockerfile: RuiSantos.AutoFill.Web/RuiSantos.AutoFill.Web/Dockerfile
-
-  ruisantos.autofill.web.client:
-    image: ruisantos.autofill.web.client
-    build:
-      context: .
-      dockerfile: RuiSantos.AutoFill.Web/RuiSantos.AutoFill.Web.Client/Dockerfile
-
-  ruisantos.autofill.web-1:
-    image: ruisantos.autofill.web-1
-    build:
-      context: .
       dockerfile: RuiSantos.AutoFill.Web/Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - MONGO_SERVER_HOST=autofill_db
+      - MONGO_SERVER_PORT=27017
+      - MONGO_DATABASE=admin
+      - MONGO_USER=admin
+      - MONGO_PASSWORD=securepassword
+    volumes:
+      - data_protection_keys:/app/keys
+    depends_on:
+      - autofill_db
+    networks:
+      - autofill-network
+  
+  autofill_db:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=securepassword
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - autofill-network
+
+networks:
+  autofill-network:
+
+volumes:
+  mongodb_data:
+  data_protection_keys:
