@@ -4,6 +4,11 @@
 <PageTitle>Home</PageTitle>
 
 <MudContainer MaxWidth="MaxWidth.Large" Class="pa-4">
+    <!-- Loading Overlay -->
+    <MudOverlay @bind-Visible="ViewModel.IsProcessing" Absolute="true" AutoClose="false" Class="full-page-overlay">
+        <MudProgressCircular Color="Color.Primary" Size="Size.Large" Indeterminate="true" />
+    </MudOverlay>
+    
     @foreach (var template in ViewModel.TemplateDocuments)
     {
         <div>@template.Name</div>

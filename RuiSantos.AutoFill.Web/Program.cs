@@ -5,6 +5,7 @@ using RuiSantos.AutoFill.Application;
 using RuiSantos.AutoFill.Infrastructure.Engines.Gemini;
 using RuiSantos.AutoFill.Web.Components;
 using RuiSantos.AutoFill.Web.ViewModels;
+using RuiSantos.AutoFill.Web.ViewModels.Commons;
 
 #if DEBUG
 using LiteDB;
@@ -28,6 +29,7 @@ builder.Services.AddDataProtection()
 
 // Add AutoFill Services
 builder.Services
+    .AddAllServices()
     .UseAutoFill()
     .UseGeminiEngine(options =>
     {
@@ -59,9 +61,6 @@ builder.Services.UseMongoDb(options =>
     options.ApplicationName = builder.Configuration.GetValue("MONGO_DATABASE", "autofill");
 });
 #endif
-
-
-builder.Services.AddScoped<MainViewModel>();
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
